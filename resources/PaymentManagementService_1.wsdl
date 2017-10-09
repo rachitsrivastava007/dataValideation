@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--edited with XMLSpy v2013 rel. 2 (http://www.altova.com) by LEE VAN AALSBURG (SPRINT)--><!--EAI Design, Sprint Nextel, Jayan Rangan Initial version for Vesta 09/15/2007--><!--EAI Design, Sprint Nextel, Tracy Turner Merged 10.2 changes with 10.3 changes--><!--EAI Design, Sprint Nextel, Ace Cineus Merged MID 12.2 Added three new operations--><!--EAI Design, Sprint Nextel, Tracy Turner Merged fixed reversePreauth reference--><!--EAI Design, Sprint, Cindy Pummill Added one operation--><!--EAI Design, Sprint, Paula Muller Added one operation called validatePanActivate--><!--EAI Design, Sprint, Cindy Pummill Removed retired operations, removeEnrollment, preAuthorizePayment, reversePreAuth and setEnrollment. 01/12/2016 for GBL16.1--><wsdl:definitions targetNamespace="http://integration.sprint.com/interfaces/v1/PaymentManagementService.wsdl" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://integration.sprint.com/interfaces/v1/PaymentManagementService.wsdl" xmlns:err="http://integration.sprint.com/common/ErrorDetails.xsd" xmlns:errv2="http://integration.sprint.com/common/ErrorDetailsV2.xsd" xmlns:ops2="http://integration.sprint.com/interfaces/addPayment/v1/addPayment.xsd" xmlns:updDefTrt="http://integration.sprint.com/interfaces/updateDeferredTreatment/v1/updateDeferredTreatment.xsd" xmlns:verifyach="http://integration.sprint.com/interfaces/verifyAch/v1/verifyAch.xsd" xmlns:ops5="http://integration.sprint.com/interfaces/calculateProductTax/v1/calculateProductTax.xsd" xmlns:ops6="http://integration.sprint.com/interfaces/queryTaxGeoCode/v1/queryTaxGeoCode.xsd" xmlns:ops7="http://integration.sprint.com/interfaces/calculateMultiplePeriodTax/v1/calculateMultiplePeriodTax.xsd" xmlns:ops8="http://integration.sprint.com/interfaces/accountBalanceCharge/v1/accountBalanceCharge.xsd" xmlns:ops9="http://integration.sprint.com/interfaces/accountBalanceRefund/v1/accountBalanceRefund.xsd" xmlns:calcStore="http://integration.sprint.com/interfaces/calculateStoreTax/v1/calculateStoreTax.xsd" xmlns:ops25="http://integration.sprint.com/interfaces/calculateEquipmentTax/v1/calculateEquipmentTax.xsd" xmlns:mngFdp="http://integration.sprint.com/interfaces/manageFDP/v1/manageFDP.xsd" xmlns:pan="http://integration.sprint.com/interfaces/validatePanActivate/v1/validatePanActivate.xsd" xmlns:wshdr="http://integration.sprint.com/common/header/WSMessageHeader/v2" xmlns:ns="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns1="http://integration.sprint.com/interfaces/v1/paymentmanagement-common.xsd" xmlns:ns2="http://integration.sprint.com/v2/common/CanonicalDataModel.xsd">
+  <wsdl:types>
+    <xs:schema targetNamespace="http://integration.sprint.com/common/header/WSMessageHeader/v2">
+      <xs:include schemaLocation="WSMessageHeaderV2.xsd"/>
+    </xs:schema>
+    <xs:schema targetNamespace="http://integration.sprint.com/common/ErrorDetails.xsd">
+      <xs:include schemaLocation="ErrorDetails.xsd"/>
+    </xs:schema>
+    <xs:schema targetNamespace="http://integration.sprint.com/common/ErrorDetailsV2.xsd">
+      <xs:include schemaLocation="ErrorDetailsV2.xsd"/>
+    </xs:schema>
+    <xs:schema targetNamespace="http://integration.sprint.com/interfaces/addPayment/v1/addPayment.xsd">
+      <xs:include schemaLocation="addPayment.xsd"/>
+    </xs:schema>
+    <xs:schema targetNamespace="http://integration.sprint.com/interfaces/updateDeferredTreatment/v1/updateDeferredTreatment.xsd">
+      <xs:include schemaLocation="updateDeferredTreatment.xsd"/>
+    </xs:schema>
+    <xs:schema targetNamespace="http://integration.sprint.com/interfaces/verifyAch/v1/verifyAch.xsd">
+      <xs:include schemaLocation="verifyAch.xsd"/>
+    </xs:schema>
+    <xs:schema targetNamespace="http://integration.sprint.com/interfaces/calculateStoreTax/v1/calculateStoreTax.xsd">
+      <xs:include schemaLocation="calculateStoreTax.xsd"/>
+    </xs:schema>
+    <xs:schema targetNamespace="http://integration.sprint.com/interfaces/calculateEquipmentTax/v1/calculateEquipmentTax.xsd">
+      <xs:include schemaLocation="calculateEquipmentTax.xsd"/>
+    </xs:schema>
+    <xs:schema>
+      <xs:import namespace="http://integration.sprint.com/interfaces/calculateProductTax/v1/calculateProductTax.xsd" schemaLocation="calculateProductTax.xsd"/>
+      <xs:import namespace="http://integration.sprint.com/interfaces/queryTaxGeoCode/v1/queryTaxGeoCode.xsd" schemaLocation="queryTaxGeoCode.xsd"/>
+      <xs:import namespace="http://integration.sprint.com/interfaces/calculateMultiplePeriodTax/v1/calculateMultiplePeriodTax.xsd" schemaLocation="calculateMultiplePeriodTax.xsd"/>
+      <xs:import namespace="http://integration.sprint.com/interfaces/accountBalanceCharge/v1/accountBalanceCharge.xsd" schemaLocation="accountBalanceCharge.xsd"/>
+      <xs:import namespace="http://integration.sprint.com/interfaces/accountBalanceRefund/v1/accountBalanceRefund.xsd" schemaLocation="accountBalanceRefund.xsd"/>
+      <xs:import namespace="http://integration.sprint.com/interfaces/calculateStoreTax/v1/calculateStoreTax.xsd" schemaLocation="calculateStoreTax.xsd"/>
+      <xs:import namespace="http://integration.sprint.com/interfaces/calculateEquipmentTax/v1/calculateEquipmentTax.xsd" schemaLocation="calculateEquipmentTax.xsd"/>
+      <xs:import namespace="http://integration.sprint.com/interfaces/manageFDP/v1/manageFDP.xsd" schemaLocation="manageFDP.xsd"/>
+      <xs:import namespace="http://integration.sprint.com/interfaces/validatePanActivate/v1/validatePanActivate.xsd" schemaLocation="validatePanActivate.xsd"/>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="faultmessage">
+    <wsdl:part name="fault" element="err:errorDetailItem"/>
+  </wsdl:message>
+  <wsdl:message name="faultmessageV2">
+    <wsdl:part name="faultV2" element="errv2:errorDetailItem"/>
+  </wsdl:message>
+  <wsdl:message name="WSMessageHeader">
+    <wsdl:part name="head" element="wshdr:wsMessageHeader"/>
+  </wsdl:message>
+  <wsdl:message name="addPaymentRequest">
+    <wsdl:part name="addPaymentRequest" element="ops2:addPayment"/>
+  </wsdl:message>
+  <wsdl:message name="addPaymentResponse">
+    <wsdl:part name="addPaymentResponse" element="ops2:addPaymentResponse"/>
+  </wsdl:message>
+  <wsdl:message name="updateDeferredTreatment">
+    <wsdl:part name="updateDeferredTreatmentRequest" element="updDefTrt:updateDeferredTreatment"/>
+  </wsdl:message>
+  <wsdl:message name="updateDeferredTreatmentResponse">
+    <wsdl:part name="updateDeferredTreatmentResponse" element="updDefTrt:updateDeferredTreatmentResponse"/>
+  </wsdl:message>
+  <wsdl:message name="verifyAch">
+    <wsdl:part name="verifyAchRequest" element="verifyach:verifyAch"/>
+  </wsdl:message>
+  <wsdl:message name="verifyAchResponse">
+    <wsdl:part name="verifyAchResponse" element="verifyach:verifyAchResponse"/>
+  </wsdl:message>
+  <wsdl:message name="queryTaxGeoCodeRequest">
+    <wsdl:part name="queryTaxGeoCodeRequest" element="ops6:queryTaxGeoCode"/>
+  </wsdl:message>
+  <wsdl:message name="queryTaxGeoCodeResponse">
+    <wsdl:part name="queryTaxGeoCodeResponse" element="ops6:queryTaxGeoCodeResponse"/>
+  </wsdl:message>
+  <wsdl:message name="calculateProductTaxRequest">
+    <wsdl:part name="calculateProductTaxRequest" element="ops5:calculateProductTax"/>
+  </wsdl:message>
+  <wsdl:message name="calculateProductTaxResponse">
+    <wsdl:part name="calculateProductTaxResponse" element="ops5:calculateProductTaxResponse"/>
+  </wsdl:message>
+  <wsdl:message name="calculateMultiplePeriodTaxRequest">
+    <wsdl:part name="calculateMultiplePeriodTaxRequest" element="ops7:calculateMultiplePeriodTax"/>
+  </wsdl:message>
+  <wsdl:message name="calculateMultiplePeriodTaxReponse">
+    <wsdl:part name="calculateMultiplePeriodTaxResponse" element="ops7:calculateMultiplePeriodTaxResponse"/>
+  </wsdl:message>
+  <wsdl:message name="accountBalanceChargeRequest">
+    <wsdl:part name="accountBalanceChargeRequest" element="ops8:accountBalanceCharge"/>
+  </wsdl:message>
+  <wsdl:message name="accountBalanceChargeResponse">
+    <wsdl:part name="accountBalanceChargeResponse" element="ops8:accountBalanceChargeResponse"/>
+  </wsdl:message>
+  <wsdl:message name="accountBalanceRefundRequest">
+    <wsdl:part name="accountBalanceRefundRequest" element="ops9:accountBalanceRefund"/>
+  </wsdl:message>
+  <wsdl:message name="accountBalanceRefundResponse">
+    <wsdl:part name="accountBalanceRefundResponse" element="ops9:accountBalanceRefundResponse"/>
+  </wsdl:message>
+  <wsdl:message name="calculateStoreTax">
+    <wsdl:part name="calculateStoreTax" element="calcStore:calculateStoreTax"/>
+  </wsdl:message>
+  <wsdl:message name="calculateStoreTaxResponse">
+    <wsdl:part name="calculateStoreTaxResponse" element="calcStore:calculateStoreTaxResponse"/>
+  </wsdl:message>
+  <wsdl:message name="calculateEquipmentTax">
+    <wsdl:part name="calculateEquipmentTax" element="ops25:calculateEquipmentTax"/>
+  </wsdl:message>
+  <wsdl:message name="calculateEquipmentTaxResponse">
+    <wsdl:part name="calculateEquipmentTaxResponse" element="ops25:calculateEquipmentTaxResponse"/>
+  </wsdl:message>
+  <wsdl:message name="manageFDP">
+    <wsdl:part name="manageFDP" element="mngFdp:manageFDP"/>
+  </wsdl:message>
+  <wsdl:message name="manageFDPResponse">
+    <wsdl:part name="manageFDPResponse" element="mngFdp:manageFDPResponse"/>
+  </wsdl:message>
+  <wsdl:message name="validatePanActivate">
+    <wsdl:part name="validatePanActivate" element="pan:validatePanActivate"/>
+  </wsdl:message>
+  <wsdl:message name="validatePanActivateResponse">
+    <wsdl:part name="validatePanActivateResponse" element="pan:validatePanActivateResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="PaymentManagementPortType">
+    <wsdl:operation name="AddPayment">
+      <wsdl:input message="tns:addPaymentRequest"/>
+      <wsdl:output message="tns:addPaymentResponse"/>
+      <wsdl:fault name="faultV2" message="tns:faultmessageV2"/>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateDeferredTreatment">
+      <wsdl:input message="tns:updateDeferredTreatment"/>
+      <wsdl:output message="tns:updateDeferredTreatmentResponse"/>
+      <wsdl:fault name="faultV2" message="tns:faultmessageV2"/>
+    </wsdl:operation>
+    <wsdl:operation name="VerifyAch">
+      <wsdl:input message="tns:verifyAch"/>
+      <wsdl:output message="tns:verifyAchResponse"/>
+      <wsdl:fault name="faultV2" message="tns:faultmessageV2"/>
+    </wsdl:operation>
+    <wsdl:operation name="QueryTaxGeoCode">
+      <wsdl:input message="tns:queryTaxGeoCodeRequest"/>
+      <wsdl:output message="tns:queryTaxGeoCodeResponse"/>
+      <wsdl:fault name="faultV2" message="tns:faultmessageV2"/>
+    </wsdl:operation>
+    <wsdl:operation name="CalculateProductTax">
+      <wsdl:input message="tns:calculateProductTaxRequest"/>
+      <wsdl:output message="tns:calculateProductTaxResponse"/>
+      <wsdl:fault name="faultV2" message="tns:faultmessageV2"/>
+    </wsdl:operation>
+    <wsdl:operation name="CalculateMultiplePeriodTax">
+      <wsdl:input message="tns:calculateMultiplePeriodTaxRequest"/>
+      <wsdl:output message="tns:calculateMultiplePeriodTaxReponse"/>
+      <wsdl:fault name="faultV2" message="tns:faultmessageV2"/>
+    </wsdl:operation>
+    <wsdl:operation name="AccountBalanceCharge">
+      <wsdl:input message="tns:accountBalanceChargeRequest"/>
+      <wsdl:output message="tns:accountBalanceChargeResponse"/>
+      <wsdl:fault name="faultV2" message="tns:faultmessageV2"/>
+    </wsdl:operation>
+    <wsdl:operation name="AccountBalanceRefund">
+      <wsdl:input message="tns:accountBalanceRefundRequest"/>
+      <wsdl:output message="tns:accountBalanceRefundResponse"/>
+      <wsdl:fault name="faultV2" message="tns:faultmessageV2"/>
+    </wsdl:operation>
+    <wsdl:operation name="CalculateStoreTax">
+      <wsdl:input message="tns:calculateStoreTax"/>
+      <wsdl:output message="tns:calculateStoreTaxResponse"/>
+      <wsdl:fault name="faultV2" message="tns:faultmessageV2"/>
+    </wsdl:operation>
+    <wsdl:operation name="CalculateEquipmentTax">
+      <wsdl:input message="tns:calculateEquipmentTax"/>
+      <wsdl:output message="tns:calculateEquipmentTaxResponse"/>
+      <wsdl:fault name="faultV2" message="tns:faultmessageV2"/>
+    </wsdl:operation>
+    <wsdl:operation name="ManageFDP">
+      <wsdl:input message="tns:manageFDP"/>
+      <wsdl:output message="tns:manageFDPResponse"/>
+      <wsdl:fault name="faultV2" message="tns:faultmessageV2"/>
+    </wsdl:operation>
+    <wsdl:operation name="ValidatePanActivate">
+      <wsdl:input message="tns:validatePanActivate"/>
+      <wsdl:output message="tns:validatePanActivateResponse"/>
+      <wsdl:fault name="faultV2" message="tns:faultmessageV2"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="PaymentManagementSOAPBinding" type="tns:PaymentManagementPortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="AddPayment">
+      <soap:operation soapAction="AddPayment"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+        <soap:header message="tns:WSMessageHeader" part="head" use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+        <soap:header message="tns:WSMessageHeader" part="head" use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="faultV2">
+        <soap:header message="tns:WSMessageHeader" part="head" use="literal"/>
+        <soap:fault name="faultV2" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateDeferredTreatment">
+      <soap:operation soapAction="UpdateDeferredTreatment"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+        <soap:header message="tns:WSMessageHeader" part="head" use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+        <soap:header message="tns:WSMessageHeader" part="head" use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="faultV2">
+        <soap:header message="tns:WSMessageHeader" part="head" use="literal"/>
+        <soap:fault name="faultV2" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="VerifyAch">
+      <soap:operation soapAction="VerifyAch"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+        <soap:header message="tns:WSMessageHeader" part="head" use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+        <soap:header message="tns:WSMessageHeader" part="head" use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="faultV2">
+        <soap:header message="tns:WSMessageHeader" part="head" use="literal"/>
+        <soap:fault name="faultV2" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="QueryTaxGeoCode">
+      <soap:operation soapAction="QueryTaxGeoCode"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+        <soap:header message="tns:WSMessageHeader" part="head" use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+        <soap:header message="tns:WSMessageHeader" part="head" use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="faultV2">
+        <soap:fault name="faultV2" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="CalculateProductTax">
+      <soap:operation soapAction="CalculateProductTax"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+        <soap:header message="tns:WSMessageHeader" part="head" use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+        <soap:header message="tns:WSMessageHeader" part="head" use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="faultV2">
+        <soap:fault name="faultV2" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="CalculateMultiplePeriodTax">
+      <soap:operation soapAction="CalculateMultiplePeriodTax"/>
+      <wsdl:input>
+        <soap:header message="tns:WSMessageHeader" part="head" use="literal"/>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:header message="tns:WSMessageHeader" part="head" use="literal"/>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="faultV2">
+        <soap:fault name="faultV2" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="AccountBalanceCharge">
+      <soap:operation soapAction="AccountBalanceCharge"/>
+      <wsdl:input>
+        <soap:header message="tns:WSMessageHeader" part="head" use="literal"/>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:header message="tns:WSMessageHeader" part="head" use="literal"/>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="faultV2">
+        <soap:fault name="faultV2" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="AccountBalanceRefund">
+      <soap:operation soapAction="AccountBalanceRefund"/>
+      <wsdl:input>
+        <soap:header message="tns:WSMessageHeader" part="head" use="literal"/>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:header message="tns:WSMessageHeader" part="head" use="literal"/>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="faultV2">
+        <soap:fault name="faultV2" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="CalculateStoreTax">
+      <soap:operation soapAction="CalculateStoreTax"/>
+      <wsdl:input>
+        <soap:header message="tns:WSMessageHeader" part="head" use="literal"/>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:header message="tns:WSMessageHeader" part="head" use="literal"/>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="faultV2">
+        <soap:fault name="faultV2" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="CalculateEquipmentTax">
+      <soap:operation soapAction="CalculateEquipmentTax"/>
+      <wsdl:input>
+        <soap:header message="tns:WSMessageHeader" part="head" use="literal"/>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:header message="tns:WSMessageHeader" part="head" use="literal"/>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="faultV2">
+        <soap:fault name="faultV2" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ManageFDP">
+      <soap:operation soapAction="ManageFDP"/>
+      <wsdl:input>
+        <soap:header message="tns:WSMessageHeader" part="head" use="literal"/>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:header message="tns:WSMessageHeader" part="head" use="literal"/>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="faultV2">
+        <soap:fault name="faultV2" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ValidatePanActivate">
+      <soap:operation soapAction="ValidatePanActivate"/>
+      <wsdl:input>
+        <soap:header message="tns:WSMessageHeader" part="head" use="literal"/>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:header message="tns:WSMessageHeader" part="head" use="literal"/>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="faultV2">
+        <soap:fault name="faultV2" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="PaymentManagementService">
+    <wsdl:port name="PaymentManagementPortType" binding="tns:PaymentManagementSOAPBinding">
+      <soap:address location="http://localhost:7001"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

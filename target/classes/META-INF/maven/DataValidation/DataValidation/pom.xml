@@ -1,0 +1,89 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>DataValidation</groupId>
+  <artifactId>DataValidation</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <dependencies>
+  <!-- https://mvnrepository.com/artifact/org.apache.poi/poi -->
+	<dependency>
+	    <groupId>org.apache.poi</groupId>
+	    <artifactId>poi</artifactId>
+	    <version>3.7</version>
+	</dependency>
+  
+  
+  	<dependency>
+			<groupId>org.mongodb</groupId>
+			<artifactId>mongo-java-driver</artifactId>
+			<version>2.10.1</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sourceforge.jexcelapi</groupId>
+			<artifactId>jxl</artifactId>
+			<version>2.6</version>
+		</dependency>
+			<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.6.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.6.1</version>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.16</version>
+			<!-- <scope>runtime</scope> -->
+		</dependency>
+
+    <dependency>
+        <groupId>net.java.dev.jgoodies</groupId>
+        <artifactId>looks</artifactId>
+        <version>2.1.4</version>
+    </dependency>
+    <dependency>
+        <groupId>net.sf.squirrel-sql.thirdparty-non-maven</groupId>
+        <artifactId>com-fifesoft-rsyntaxtextarea</artifactId>
+        <version>1.0.0</version>
+    </dependency>
+    
+    
+
+    <dependency>
+        <groupId>org.apache.karaf.eik.plugins</groupId>
+        <artifactId>org.apache.commons.collections</artifactId>
+        <version>3.2.1</version>
+    </dependency>
+    
+	</dependencies>	
+  <build>
+    <sourceDirectory>src</sourceDirectory>
+    		
+  </build>
+        <repositories>
+        <repository>
+            <id>maven2</id>
+            <url>https://www.soapui.org/repository/maven2/</url>
+        </repository>
+        <repository>
+            <id>activation</id>
+            <url>https://www.soapui.org/repository/activation/jars</url>
+        </repository>
+        <repository>
+            <id>xmlbeans</id>
+            <url>https://www.soapui.org/repository/xmlbeans/jars</url>
+        </repository>
+        <repository>
+            <id>bouncycastle</id>
+            <url>https://www.soapui.org/repository/bouncycastle/jars</url>
+        </repository>
+        <repository>
+            <id>javamail</id>
+            <url>https://www.soapui.org/repository/javamail/jars</url>
+        </repository>
+    </repositories>
+</project>

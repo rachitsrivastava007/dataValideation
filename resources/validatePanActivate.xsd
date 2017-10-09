@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--edited with XMLSpy v2013 rel. 2 (x64) (http://www.altova.com) by Stephen.J.Heichelheim@sprint.com (SPRINT)--><xs:schema targetNamespace="http://integration.sprint.com/interfaces/validatePanActivate/v1/validatePanActivate.xsd" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://integration.sprint.com/interfaces/validatePanActivate/v1/validatePanActivate.xsd">
+  <!--Date              Author                        Change                                                                        		Rel                    SR#-->
+  <!--03/26/2015 Paula Muller       1.0       initial version                                                                             GBL15.2           PJ012171 Epic 129 Prepaid-->
+  <!--03/31/2015 Steve Heichelheim  1.0    Standardize                                                                    GBL15.2           PJ012171 Epic 129 Prepaid-->
+  <!--03/31/2015 Paula Muller       1.1       Changed depositAmount to be paymentAmount.                                                                             GBL15.2           PJ012171 Epic 129 Prepaid-->
+  <!--03/31/2015 Steve Heichelheim  1.0    Standardize                                                                    GBL15.2           PJ012171 Epic 129 Prepaid-->
+  <!---->
+  <xs:element name="validatePanActivate" type="tns:ValidatePanActivateRequestType"/>
+  <xs:element name="validatePanActivateResponse" type="tns:ValidatePanActivateResponseType"/>
+  <!---->
+  <xs:complexType name="ValidatePanActivateRequestType">
+    <xs:sequence>
+      <xs:element name="pan" type="tns:PreCashCardNumberType">
+        <xs:annotation>
+          <xs:documentation>Precash account number</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ban" type="tns:BillingAccountNumberType">
+        <xs:annotation>
+          <xs:documentation>Sprint billing account number</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="mdn" type="tns:MobileDirectoryNumberStringType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Mobile Phone Number. Sprint must provide the primary mobile phone number assigned to the account, except for when no mobile phone number is present in the instance of a “equipment order” order</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="paymentAmount" type="tns:PaymentAmountType">
+        <xs:annotation>
+          <xs:documentation>Represents total cash  amount to be processed through PreCash to secure a new activation of a new account of sub to an account.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="locationId" type="tns:LocationIdentifierType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Sprint value representing a given merchant location.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="transactionId" type="tns:TransactionIdentifierType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Sprint assigned value that uniquely identifies a particular request. When present this id must be unique.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="networkId" type="tns:NetworkTypeCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Sprint Network Identifier corresponding to account being setup/activated.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ValidatePanActivateResponseType">
+    <xs:sequence>
+      <xs:element name="status" type="tns:ActivationStatusCodeType">
+        <xs:annotation>
+          <xs:documentation>Valid values to FE be able to finish the activation are: VALID,
+NO_ACTION
+
+Front End will not be able to finish the activation if any of the values below is returned:
+TAKEN, 
+DEPOSITMIN, NO_DEPOSIT,
+PANINV,
+UNASSOC,
+ERROR</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ban" type="tns:BillingAccountNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Billing Account Number will be returned if PreCash sends “TAKEN” as a Status.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <!---->
+  <!--MVM/Shared Simple types-->
+  <xs:simpleType name="ActivationStatusCodeType">
+    <xs:annotation>
+      <xs:documentation>Activation Status Code indicates that current status of the activiation.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="10"/>
+      <xs:enumeration value="VALID"/>
+      <xs:enumeration value="NO_ACTION"/>
+      <xs:enumeration value="TAKEN">
+        <!--Equipment model ID is invalid.-->
+      </xs:enumeration>
+      <xs:enumeration value="DEPOSITMIN">
+        <!--Rate center the phone was activated in doesn't match the NPA/NXX of the PTN.-->
+      </xs:enumeration>
+      <xs:enumeration value="NO_DEPOSIT"/>
+      <xs:enumeration value="PANINV"/>
+      <xs:enumeration value="UNASSOC"/>
+      <xs:enumeration value="ERROR"/>
+    </xs:restriction>
+    <!--The activation response for each handset.-->
+  </xs:simpleType>
+  <xs:simpleType name="BillingAccountNumberType">
+    <xs:annotation>
+      <xs:documentation>Billing Account Number uniquely identifies an instance of Billing Account used to accrue charges for invoicing.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:integer">
+      <xs:totalDigits value="9"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="LocationIdentifierType">
+    <xs:annotation>
+      <xs:documentation>Location Identifier identifiies a specific location such as a building location.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="20"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="MobileDirectoryNumberStringType">
+    <xs:annotation>
+      <xs:documentation>Mobile Directory Number (MDN) is the actual phone number one would dial to reach a specific mobile phone.
+
+
+
+Prior to Wireless Number Portability, MDN was the same number as the Mobile Identification Number (MIN) for many mobile phones. But now that MDNs can be ported (moved) to other carriers, MDN and MIN will be different for ported numbers.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="10"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="NetworkTypeCodeType">
+    <xs:annotation>
+      <xs:documentation>Network Type Code identifies which network the subscriber or device is associated to.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="20"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="PaymentAmountType">
+    <xs:annotation>
+      <xs:documentation>Payment amount is the amount of an invoice's charges for which payments have been applied.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:decimal">
+      <xs:totalDigits value="10"/>
+      <xs:fractionDigits value="2"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="PreCashCardNumberType">
+    <xs:annotation>
+      <xs:documentation>Pre Cash Card Number is the identifier of an electronic payment card that allows customers to make cash payments to their account.  It is not a debit or credit card.  It ensures that when a customer makes a payment in a retail store, the payment is applied to the right account.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="16"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TransactionIdentifierType">
+    <xs:annotation>
+      <xs:documentation>Transaction Identifier is a unique string that identifies a transaction.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="20"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <!---->
+</xs:schema>

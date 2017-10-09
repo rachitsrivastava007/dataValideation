@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" output="target/classes" path="src">
+		<attributes>
+			<attribute name="optional" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/CpwJars/selenium-server-standalone-2.47.1.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/MongoDB"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Excel"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/bin/soapui-5.2.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/activation-1.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/analytics-core-5.2.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/animal-sniffer-annotations-1.11.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/bcprov-jdk15-144.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/binding-2.0.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/cajo-1.142.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/commons-beanutils-1.7.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/commons-cli-1.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/commons-codec-1.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/commons-collections-3.2.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/commons-httpclient-3.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/commons-io-2.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/commons-lang-2.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/cssparser-0.9.5.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/dom4j-1.6.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/ezmorph-1.0.5.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/flex-messaging-common-1.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/flex-messaging-core-1.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/flex-messaging-opt-1.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/flex-messaging-proxy-1.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/flex-messaging-remoting-1.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/forms-1.0.7.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/groovy-all-2.1.7.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/guava-14.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/hamcrest-core-1.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/hermes-1.14.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/htmlunit-2.7.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/htmlunit-core-js-2.7.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/httpclient-4.1.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/httpclient-cache-4.1.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/httpcore-4.1.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/httpcore-nio-4.1.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/httpmime-4.1.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/i4jruntime-5.1.14.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/javassist-3.16.1-GA.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/jaxen-1.1-beta-8.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/jcifs-1.2.9.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/jdom-1.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/jettison-1.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/jetty-6.1.26.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/jetty-util-6.1.26.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/jms-1.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/joda-time-1.6.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/js-1.7R2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/json-lib-2.2.2-jdk15.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/json-path-0.9.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/json-smart-1.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/jsr173_api-1.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/jtidy-r872-jdk15.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/junit-4.11.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/l2fprod-common-directorychooser-7.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/l2fprod-common-fontchooser-7.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/log4j-1.2.14.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/looks-2.2.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/mail-1.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/maven-plugin-api-2.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/nekohtml-1.9.14.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/not-yet-commons-ssl-0.3.11.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/opensaml-2.5.1-1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/openws-1.4.2-1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/org.apache.oltu.oauth2.client-0.31.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/org.apache.oltu.oauth2.common-0.31.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/org.apache.oltu.oauth2.httpclient4-0.31.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/out-app-analytics-provider-5.2.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/proxy-vole-20131209.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/reflections-0.9.9-RC1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/rsyntaxtextarea-2.5.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/sac-1.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/saxon-9.1.0.8j.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/saxon-dom-9.1.0.8j.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/serializer-2.7.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/servlet-api-2.5-20081211.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/slf4j-api-1.6.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/swingx-soapui.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/ws-commons-util-1.0.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/wsdl4j-1.6.2-fixed.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/wss4j-1.6.16.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/xalan-2.7.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/xbean_xpath-2.4.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/xbean-fixed-2.4.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/xercesImpl-2.9.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/xml-apis-1.3.04.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/xml-apis-2.9.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/xmlParserAPIs-2.6.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/xmlpublic-2.4.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/xmlsec-1.4.5.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/xmltooling-1.3.2-1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/xmlunit-1.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/xom-1.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rachit.a.srivastava/Downloads/SoapUI-5.2.1/lib/xstream-1.3.1.jar"/>
+	<classpathentry kind="output" path="target/classes"/>
+</classpath>

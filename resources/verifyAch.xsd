@@ -1,0 +1,644 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--edited with XMLSpy v2008 rel. 2 sp2 (http://www.altova.com) by LEE VAN AALSBURG (SPRINT)--><xs:schema targetNamespace="http://integration.sprint.com/interfaces/verifyAch/v1/verifyAch.xsd" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" xmlns:tns="http://integration.sprint.com/interfaces/verifyAch/v1/verifyAch.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <!--Date	            Author             	          Version  Change description   	                                                                     Rel.	         SR#-->
+  <!--01/09/2012          LaRonna Tisdale                    1.0         Intial Version                                                                                      GBL12.2       PJ004755-->
+  <!--01/09/2012          Steve Heichelheim                 1.0         Added MVM standards and simple types                                          GBL12.2       PJ004755-->
+  <!--03/06/2012          LaRonna Tisdale                    1.1        Removed changed of 'supplementalId' and 'supplimentalIdType' from "Req" to "Opt"  GBL12.2    PJ004755-->
+  <!--04/13/2012          LaRonna Tisdale                    1.2        CS# 527095 Changed date/time in Response to simple type string of 12-->
+  <xs:element name="verifyAch" type="tns:VerifyAchRequestType">
+    <xs:annotation>
+      <xs:documentation>ACH - Automated Clearing House</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="verifyAchResponse" type="tns:VerifyAchResponseType"/>
+  <xs:complexType name="VerifyAchRequestType">
+    <xs:sequence>
+      <xs:element name="packetTypeIdentifier" type="tns:TransactionTypeCodeType">
+        <xs:annotation>
+          <xs:documentation>Used to determine the packet type sent to the TeleCheck host</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="telecheckMerhantId" type="tns:MerchantIdentifierType">
+        <xs:annotation>
+          <xs:documentation>A.K.A. TeleCheck Subscriber ID. This field is issued by TeleCheck to identify the product used by the merchant</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="micr" type="tns:MagneticInkCharacterRecognitionTextType">
+        <xs:annotation>
+          <xs:documentation>MICR is an acronym for Magnetic Ink Character Recognition. MICR is a process by which documents are printed using magnetic ink and special fonts to create machine-readable information for quick document processing
+This contains 2 sub-fields: 
+MICR Type, which specifies whether the MICR was read by the check reader (Raw MICR) or entered manually and, 
+MICR line data (Routing/Transit number, Account number, Check number)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="manualCheckNumber" type="tns:AbaRoutingNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>This field is required when the MICR line is manually keyed or merchant parsed at the POS
+**Amdocs will not send**</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="checkType" type="tns:CheckTypeCodeType">
+        <xs:annotation>
+          <xs:documentation>Indicates the type of check presented in the transaction
+Default to “P”</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="micrReaderStatus" type="tns:MagneticInkCharacterRecognitionReaderStatusCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Indicates the status of the MICR read from the check reader and aides TeleCheck in the ECA decision process.
+Valid Values:
+15 – Valid read by the MICR reader
+15I – Valid read by the MICR w/imaging  
+3 – Magnetic ink present but reader could not read all characters on the document
+5 – Check reader did not detect any magnetic ink on the document
+9 – Manual only , not read by the reader
+**Amdocs will not send**</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="merchantIdTraceId" type="tns:ExternalSystemReferenceNumberType">
+        <xs:annotation>
+          <xs:documentation>A.K.A. Billing Control Number (BCN). This is a Merchant-generated transaction identifier (ex. invoice number, register receipt number, customer number, etc.) attached to the sale transactions to support reporting and reconciliation</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="totalCheckAmount" type="tns:PaymentAmountType">
+        <xs:annotation>
+          <xs:documentation>Total dollar amount of the original sale transaction. TeleCheck does not accept negative amounts</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="productCode" type="tns:ProductClassCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Identifies the type of merchandise purchased at the POS
+**Amdocs will not send**</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="trackOneIdentifier" type="tns:DriverLicenseMagneticStripeTrackOneType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Contains the data from a swiped driver license when a second ID is requested. This tag contains the Track 1 Data (excluding from the STX, ETX or LRC) from the magnetic strip
+**Amdocs will not send**</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="trackTwoIdentifier" type="tns:DriverLicenseMagneticStripeTrackTwoType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Contains the data from a swiped driver license when a second ID is requested. This tag contains the Track 2 Data (excluding from the STX, ETX or LRC) from the magnetic strip 
+**Amdocs will not send**</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="manualIdentifier" type="tns:PartyOtherIdentifierType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Used for manually keyed data via the keypad on transactions where a second check writer ID is requested
+**Amdocs will not send**</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="supplementalId" type="tns:PartyOtherIdentifierType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Used for transactions where a third check writer ID is provided and contains sub-fields for the Manual ID Type and the Manual ID Type data</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="supplementalIdType" type="tns:PartyOtherIdentifierTypeCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Used for transactions where a third check writer ID is provided</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="dateOfBirth" type="tns:BirthDateType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The check writer’s date of birth submitted by the merchant
+**Amdocs will not send**</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="checkWriterName" type="tns:PartyNameStringType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The check writer’s name submitted by the merchant
+**Amdocs will not send**</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="checkWriterPhoneNumber" type="tns:PhoneNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The check writer’s phone number; including the area code submitted by the merchant.
+**Amdocs will not send**</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="checkWriterAddress" type="tns:PostalAddressLine2Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The check writer's physical (street) address of residence submitted by the merchant
+**Amdocs will not send**</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="checkWriterCity" type="tns:CityNameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The check writer’s city of residence submitted by the merchant
+**Amdocs will not send**</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="checkWriterState" type="tns:UspsStateAbbreviationType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The check writer’s state of residence submitted by the merchant
+**Amdocs will not send**</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="checkWriterZip" type="tns:PostalCodeStringType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The check writer’s zip code submitted by the merchant
+**Amdocs will not send**</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="checkWriterInitials" type="tns:InitialsType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The check writer’s initials submitted by the merchant
+**Amdocs will not send**</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="clerkIdAgentId" type="tns:DealerAgentIdentifierType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Used to track the clerk/agent transaction activity, providing the ability for merchants to generate reports using the Clerk/Agent ID as the key.
+**Amdocs will not send**</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="terminalId" type="tns:MerchantTerminalIdentifierType">
+        <xs:annotation>
+          <xs:documentation>Identifies the register or lane number where the original sale transaction occurred</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="echoData" type="tns:MessageStringType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Merchant-defined printable data (letters, digits, spaces, punctuation) that will be echoed back in the response if data is sent from the POS in an inquiry message</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="dateTime" type="tns:TransactionDateTimeType">
+        <xs:annotation>
+          <xs:documentation>The date and time of a specific transaction, displayed in 24 hour format</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="releaseType" type="tns:MerchandiseReleaseTypeCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Describes how the merchant is releasing the purchased merchandise to the check writer and  is used as a risk variable to gauge risk level
+Valid Values:
+C – Carry out
+T – Today Pickup
+D – Home Delivery
+P – Future Pickup
+**Amdocs will not send**</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="telecheckTraceId" type="tns:TeleCheckTraceIdentifierType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>A unique twenty-two digit number issued and returned by TeleCheck in the Sale Response Message that identifies a specific electronic transaction
+**Amdocs will not send**</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="cashBackAmount" type="tns:MonetaryAmountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Identifies the amount of money (over the purchase amount) the Merchant requests to return to the check writer as cash
+**Amdocs will not send**</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="preAuthIndicator" type="tns:TeleCheckPreApprovalTypeCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Allows TeleCheck to give a pre-approval for check transactions before the actual transactions amount is known.
+Valid Values:
+1 – Pre-Auth
+2 – Follow up
+**Amdocs will not send**</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="VerifyAchResponseType">
+    <xs:sequence>
+      <xs:element name="telecheckHeader" type="tns:TransmissionControlProtocolPacketLengthType">
+        <xs:annotation>
+          <xs:documentation>When using TCP/IP protocol, each message should include an ASCII 4-digit byte-count at the beginning of the transaction to indicate the length of each packet</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="displayText" type="tns:ConfirmMessageTextType">
+        <xs:annotation>
+          <xs:documentation>Displays the response message from TeleCheck</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="approvalCode" type="tns:TeleCheckApprovalCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>A TeleCheck issued 4-digit code for a specific approved transaction and response must be printed on the check writer’s copy of the authorization</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="telecheckTraceId" type="tns:TeleCheckTraceIdentifierType">
+        <xs:annotation>
+          <xs:documentation>Unique twenty-two digit number issued and returned by TeleCheck in the Sale Response Message that identifies a specific electronic transaction</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="responseCode" type="tns:TeleCheckResponseDecisionCodeType">
+        <xs:annotation>
+          <xs:documentation>The TeleCheck auth decision in the Sale Response Message that requires merchant action at the POS and complements the ACH Transaction Status field</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="denialRecordNumber" type="tns:TeleCheckDenialRecordIdentifierType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>A 7-digit code denial record number used only for declined transactions</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="echoData" type="tns:MessageStringType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Merchant-defined printable data (letters, digits, spaces, punctuation) that will be echoed back in the response if data is sent from the POS in an inquiry message</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="dateTime" type="tns:TelechceckDateTimeStringType">
+        <xs:annotation>
+          <xs:documentation>The date and time of a specific transaction ,  displayed in 24 hour format</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="micr" type="tns:MagneticInkCharacterRecognitionTextType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>MICR is an acronym for Magnetic Ink Character Recognition. MICR is a process by which documents are printed using magnetic ink and special fonts to create machine-readable information for quick document processing
+**Amdocs will not receive**</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="idTwo" type="tns:DriverLicenseNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Driver’s License Number
+**Amdocs will not receive**</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="phone" type="tns:PhoneNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Consumer phone number
+**Amdocs will not receive**</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <!---->
+  <!--MVM/Shared Simple Types-->
+  <xs:simpleType name="AbaRoutingNumberType">
+    <xs:annotation>
+      <xs:documentation>American Bankers Association Routing Number primary purposes are:
+
+(a) to identify the bank which is responsible to either pay or give credit or is
+entitled to receive payment or credit for a financial transaction, and
+
+(b) to provide a reference to a designated presentment point of the bank at
+which the transaction can be delivered or presented.
+
+The Routing Number is intended primarily to serve the needs of sending or collecting
+institutions by providing the capability for transactions to be transmitted and delivered for settlement in an efficient and timely manner with minimal processing and float costs to sending or collecting banks and payment system participants in general. In certain cases, special classes of routing numbers have been defined to facilitate either the presentment or processing of certain payment transactions.
+
+Receiving or paying banks may use the routing number to enhance the efficiency of their payment processing operations or services provided to their customers so long as these enhancements do not significantly increase check collection costs or delay collection of a significant number of items or dollars.
+
+The routing number serves a secondary purpose for most items/transactions by
+identifying the Federal Reserve office serving the presentment point of the bank.
+Therefore, the selection of the routing number to be assigned will be based on the location of the presentment point within a Federal Reserve district, territory or availability zone.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="10"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="BirthDateType">
+    <xs:annotation>
+      <xs:documentation>Birth Date contains the calendar month, day and year on which an Individual  was born.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:date"/>
+  </xs:simpleType>
+  <xs:simpleType name="CityNameType">
+    <xs:annotation>
+      <xs:documentation>City Name holds the textual string identifying a City.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="16"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ConfirmMessageTextType">
+    <xs:annotation>
+      <xs:documentation>Confrim Message Text is a string with a confirmation message returned from the called API.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="64"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DriverLicenseNumberType">
+    <xs:annotation>
+      <xs:documentation>License Number uniquely identifies a document, plate, or tag evidencing a grant  of a permission by competent authority to engage in a business or occupation or in an activity otherwise unlawful.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="35"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ExternalSystemReferenceNumberType">
+    <xs:annotation>
+      <xs:documentation>External System Reference Number is a unique number within the external system that is passed to Sprint and used for cross reference purposes.  This number is passed from Sprint back to the external system to help the external system identify an instance of a particular record in that system.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="25"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="MerchantIdentifierType">
+    <xs:annotation>
+      <xs:documentation>Merchant Identifier holds a value the uniquely indenties an instance of a MERCHANT.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:integer">
+      <xs:totalDigits value="24"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="MessageStringType">
+    <xs:annotation>
+      <xs:documentation>Message Text represents a communication of information.</xs:documentation>
+      <xs:documentation>Message represents a communication of information.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="50"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="MonetaryAmountType">
+    <xs:annotation>
+      <xs:documentation>A count of currency or money.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:decimal">
+      <xs:totalDigits value="11"/>
+      <xs:fractionDigits value="2"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="PartyNameStringType">
+    <xs:annotation>
+      <xs:documentation>Party Name String holds all of the Individual Name components, Last Name, Middle Name and First Name concatenated into a single string.  Used in those interfaces where Individual Names are not passed as components or an Organization name when the transaction does not require name components.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="30"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="PartyOtherIdentifierType">
+    <xs:annotation>
+      <xs:documentation>Party Other Identifier is a system generated value used in combination with the Party Identifier and Party Identification Type Code to uniquely identify an instance of PARTY IDENTIFICATION.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="35"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="PartyOtherIdentifierTypeCodeType">
+    <xs:annotation>
+      <xs:documentation>Party Other Identifier Type Code uniquely identifies a PARTY EXTERNAL IDENTIFIER TYPE instance representing a possible type of external identifier of a PARTY.
+
+Possible values:
+U. S. Social Security Number
+Canadian Social Security Number
+Permanent Resident Identifier
+Federal Employer Identification Number
+Dunn and Bradstreet Number
+Passport Number
+Motor Vehicle Operator License Number
+United Airlines Membership Identifier</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="2"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="PaymentAmountType">
+    <xs:annotation>
+      <xs:documentation>Payment amount is the amount of an invoice's charges for which payments have been applied.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:decimal">
+      <xs:totalDigits value="8"/>
+      <xs:fractionDigits value="2"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="PhoneNumberType">
+    <xs:annotation>
+      <xs:documentation>Phone Number holds the concatenation of the NPA Number, NXX Number and Line Number into a single string.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="10"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="PostalAddressLine2Type">
+    <xs:annotation>
+      <xs:documentation>Postal Address Line 2  is the second instance of the Postal Address Line is used in the creation of the Postal Address label. The Postal Address label is usually composed of three lines; 1. addresses, 2. street number and street name, 3. City, State, and Zipcode. In the case where PO Box is used the recipient may choose to insert their physical (aka street) address as line two, expanding the complete address to four lines. Providing both allows a sender to ship via the USPS or via a private carrier.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="16"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="PostalCodeStringType">
+    <xs:annotation>
+      <xs:documentation>Postal Code String is the string representation of a USPS Postal Code with optional extension.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:integer">
+      <xs:totalDigits value="9"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ProductClassCodeType">
+    <xs:annotation>
+      <xs:documentation>Product Class Code designates a general classificatioin that a specific product may fit into.
+Example Values Inclue:
+Datacard,
+Airave,
+Phone,
+Modem...</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:integer">
+      <xs:totalDigits value="6"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TransactionDateTimeType">
+    <xs:annotation>
+      <xs:documentation>Transaction Date Time is the date and time that a transaction occured.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:dateTime"/>
+  </xs:simpleType>
+  <xs:simpleType name="TransactionTypeCodeType">
+    <xs:annotation>
+      <xs:documentation>Transaction Type Code identifies the Create, Read, Update or Delete (CRUD) functionality of the transaction.</xs:documentation>
+      <xs:documentation>Type Code differentiates the various  categories or subtypes of an Object.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="2"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="UspsStateAbbreviationType">
+    <xs:annotation>
+      <xs:documentation>A United States Postal Service (USPS) State Abbreviation Code is the set of characters that are selected from a State or Protectorate name and specified by the USPS to represent the name of a State or US Protectorate for the purpose of mail delivery.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="2"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="VersionStringType">
+    <xs:annotation>
+      <xs:documentation>Version Number  identifies a release or iteration of a Service, Header, Trailer, Business Transaction, API, etc.</xs:documentation>
+      <xs:documentation>Version Integer holds a string value that identifies a release or iteration of a Service, Header, Trailer, Business Transaction, API, etc.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="67"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <!---->
+  <!--New Simple Types-->
+  <xs:simpleType name="CheckTypeCodeType">
+    <xs:annotation>
+      <xs:documentation>Check Type Code designates a type of check written for payment on a bank account.
+Valid Values:
+P – Consumer/Business Check,
+C – Company Check,
+T – Two Party Check,
+G – Government Check,
+S – Payroll Check,
+X – Travelers Check,
+M – Cash</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DealerAgentIdentifierType">
+    <xs:annotation>
+      <xs:documentation>Dealer Agent Identifier uniquely identifies a PARTY representing a Dealer in a business transaction.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="6"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DriverLicenseMagneticStripeTrackOneType">
+    <xs:annotation>
+      <xs:documentation>Driver License Magnetic Stripe Track One is the first track of data stored on magnetic stripes on American driver licenses as specified by the American Association of Motor Vehicle Administrators.
+The following data is stored on track 1
+Start Sentinel - one character 
+State or Province - two characters
+City - variable length (seems to max out at 13 characters)
+Field Separator - one character (absent if city reaches max length)
+Last Name - variable length
+Field Separator - one character
+First Name - variable length
+Field Separator - one character
+Middle Name - variable length
+Field Separator - one character
+Home Address (house number and street) - variable length
+Field Separator - one character
+Unknown - variable length
+End Sentinel - one character</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="79"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DriverLicenseMagneticStripeTrackTwoType">
+    <xs:annotation>
+      <xs:documentation>Driver License Magnetic Stripe Track Two is the second track of data stored on magnetic stripes on American driver licenses as specified by the American Association of Motor Vehicle Administrators.
+The following data is stored on track 2
+ISO Issuer Identifier Number (IIN) - 6 digits
+Drivers License / Identification Number - 13 digits
+Field Separator - generally '='
+Expiration Date (YYMM) - 4 digits
+Birth date (YYYYMMDD) - 8 digits
+DL/ID number overflow- 5 digits (If no information is used then a field separator is used in this field.)
+End Sentinel - one character</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="37"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="InitialsType">
+    <xs:annotation>
+      <xs:documentation>Initials are letters representing a persons name.  Usually it is a combiniation of the initial letter of each of the person's first, middle, and last name or a subset thereof.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="4"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="MagneticInkCharacterRecognitionTextType">
+    <xs:annotation>
+      <xs:documentation>Magnetic Ink Character Recognition (MICR) Text is the text printed on the bottom of a check which is used primarily by the banking industry to facilitate the processing of cheques and makes up the routing number and account number at the bottom of a check. The technology allows computers to read information (such as account numbers) off printed documents. Unlike barcodes or similar technologies, however, MICR codes can be easily read by humans.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="65"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="MagneticInkCharacterRecognitionReaderStatusCodeType">
+    <xs:annotation>
+      <xs:documentation>Magnetic Ink Character Recognition (MICR) Reader Status Code indicates the status of the MICR read from the check reader and aides TeleCheck in the ECA decision process.
+Valid Values:
+15 – Valid read by the MICR reader,
+15I – Valid read by the MICR w/imaging,  
+3 – Magnetic ink present but reader could not read all characters on the document,
+5 – Check reader did not detect any magnetic ink on the document,
+9 – Manual only , not read by the reader</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="3"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="MerchandiseReleaseTypeCodeType">
+    <xs:annotation>
+      <xs:documentation>Merchandise Release Type Code designates the manner in which the mercandise was released to the customer.
+Valid Values:
+C – Carry out,
+T – Today Pickup,
+D – Home Delivery,
+P – Future Pickup</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="MerchantTerminalIdentifierType">
+    <xs:annotation>
+      <xs:documentation>Merchant Terminal Identifier is the merchant terminal number from which the point of sale occurred.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:integer">
+      <xs:totalDigits value="10"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TeleCheckApprovalCodeType">
+    <xs:annotation>
+      <xs:documentation>TeleCheck Approval Code is a TeleCheck issued 4-digit code for a specific approved transaction and response must be printed on the check writer's copy of the authorization.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:integer">
+      <xs:totalDigits value="4"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TelechceckDateTimeStringType">
+    <xs:annotation>
+      <xs:documentation>Telecheck Date Time String is a string representation of a Date and Time sent by Telecheck in the MMDDYYYYHHMM format.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="12"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TeleCheckDenialRecordIdentifierType">
+    <xs:annotation>
+      <xs:documentation>TeleCheck Denial Record Identifier is a 7-digit code generated for declined transactions.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:integer">
+      <xs:totalDigits value="7"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TeleCheckPreApprovalTypeCodeType">
+    <xs:annotation>
+      <xs:documentation>TeleCheck Pre Approval Type Code designates a method for TeleCheck to give a pre-approval for check transactions before the actual transactions amount is known.
+Valid Values:
+1 – Pre-Auth,
+2 – Follow up</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TeleCheckResponseDecisionCodeType">
+    <xs:annotation>
+      <xs:documentation>TeleCheck Response Decision Code designates a decision in the Sale Response Message that requires merchant action at the point of sale and complements the Automated Clearing House Transaction Status field.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="2"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TeleCheckTraceIdentifierType">
+    <xs:annotation>
+      <xs:documentation>TeleCheck Trace Identifier unique twenty-two digit number issued and returned by TeleCheck that identifies a specific electronic transaction.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="22"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TransmissionControlProtocolPacketLengthType">
+    <xs:annotation>
+      <xs:documentation>Transmission Control Protocol (TCP) Packet Length is the number of bytes in an associated TCP packet.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:integer">
+      <xs:totalDigits value="4"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <!---->
+</xs:schema>

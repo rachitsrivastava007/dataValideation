@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--edited with XMLSpy v2007 sp2 (http://www.altova.com) by Sprint Employee (SPRINT)--><xs:schema targetNamespace="http://integration.sprint.com/interfaces/accountBalanceRefund/v1/accountBalanceRefund.xsd" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" xmlns:tns="http://integration.sprint.com/interfaces/accountBalanceRefund/v1/accountBalanceRefund.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <!--Date                 Author                      Version     Change                                                                                        Rel                          SR#-->
+  <!--07/20/2012     Jocelen Silva             1.0             Initial Draft                                                                                   GBL12.3                PJ007262-->
+  <!--07/25/2012   Steve Heichelheim     1.0         Added MVM standards and simple types                    GBL12.3                PJ007262-->
+  <xs:element name="accountBalanceRefund" type="tns:AccountBalanceRefundRequestType"/>
+  <xs:element name="accountBalanceRefundResponse" type="tns:AccountBalanceRefundResponseType"/>
+  <xs:complexType name="AccountBalanceRefundRequestType">
+    <xs:sequence>
+      <xs:element name="mdn" type="tns:MobileDirectoryNumberStringType">
+        <xs:annotation>
+          <xs:documentation>Customer phone number</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="transactionId" type="tns:TransactionIdentifierType">
+        <xs:annotation>
+          <xs:documentation>Request transaction Id</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="amount" type="tns:CreditAmountType">
+        <xs:annotation>
+          <xs:documentation>Amount to credit</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AccountBalanceRefundResponseType">
+    <xs:sequence>
+      <xs:element name="responseCode" type="tns:ExceptionConditionCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Refund response code
+Possible values:
+0 – Success
+5 – Failed ,  insufficient balance</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="amount" type="tns:RefundAmountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Refund amount</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="balanceAmount" type="tns:BalanceAmountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The updated balance value including amount was credited for current event.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <!---->
+  <!--MVM/Shared Simple types-->
+  <xs:simpleType name="BalanceAmountType">
+    <xs:annotation>
+      <xs:documentation>Balance Amount is a the dollar value associated to an account at a point in time.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:decimal">
+      <xs:totalDigits value="10"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="CreditAmountType">
+    <xs:annotation>
+      <xs:documentation>Credit Amount is the monetary amount of a credit applied to a customer's account or bill.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:decimal">
+      <xs:totalDigits value="10"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ExceptionConditionCodeType">
+    <xs:annotation>
+      <xs:documentation>Exception Condition Code is the provider’s declaration of its success or failure in processing the submitted request.
+Example Values:
+0 - Successful completion, 
+4 - Successful completion, but with a warning as to some unusual circumstance, 
+8 - Error, request was not processed successfully, 
+12 - Severe error, represents a failure that could indicate a major system irregularity</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="MobileDirectoryNumberStringType">
+    <xs:annotation>
+      <xs:documentation>Mobile Directory Number (MDN) is the actual phone number one would dial to reach a specific mobile phone.
+
+
+
+Prior to Wireless Number Portability, MDN was the same number as the Mobile Identification Number (MIN) for many mobile phones. But now that MDNs can be ported (moved) to other carriers, MDN and MIN will be different for ported numbers.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="10"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="RefundAmountType">
+    <xs:annotation>
+      <xs:documentation>Refund Amount is the monetary amount refunded to the customer.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:decimal">
+      <xs:totalDigits value="10"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TransactionIdentifierType">
+    <xs:annotation>
+      <xs:documentation>Transaction Identifier is a unique string that identifies a Request attempt. 
+The TransactionID provides a recovery mechanism for time-outs known as idempotency. If you receive a time-out  in response to a Request, the Request can be resent with the same TransactionID.  If the service had successfully processed a previous Request (with the same TransactionID), the previous Response will be returned.  
+If the server has not seen this TransactionID before, it will process the Request and return the Response.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:integer">
+      <xs:totalDigits value="15"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <!---->
+</xs:schema>

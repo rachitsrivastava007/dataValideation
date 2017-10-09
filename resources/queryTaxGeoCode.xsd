@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--edited with XMLSpy v2007 sp1 (http://www.altova.com) by LEE VAN AALSBURG (SPRINT)--><xs:schema targetNamespace="http://integration.sprint.com/interfaces/queryTaxGeoCode/v1/queryTaxGeoCode.xsd" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://integration.sprint.com/interfaces/queryTaxGeoCode/v1/queryTaxGeoCode.xsd">
+  <!--Date              Author                      Version    Change                                                                                                 Rel                   SR#-->
+  <!--06/18/2012   Ace Cineus                1.0           Initial Draft                                                                                             MID 12.2          PJ006430-->
+  <!--06/20/2012  Steve Heichelheim     1.0      Added MVM standards and simple types                                                  MID12.2  PJ006430-->
+  <xs:element name="queryTaxGeoCode" type="tns:QueryGeoCodeRequestType"/>
+  <xs:element name="queryTaxGeoCodeResponse" type="tns:QueryGeoCodeResponseType"/>
+  <xs:complexType name="QueryGeoCodeRequestType">
+    <xs:sequence>
+      <xs:element name="queryTaxGeoCodeInfo" type="tns:QueryGeoCodeInfoType">
+        <xs:annotation>
+          <xs:documentation>The String value containing the Geocode</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="QueryGeoCodeResponseType">
+    <xs:sequence>
+      <xs:element name="geoCodeResultList" type="tns:GeoCodeResultListType">
+        <xs:annotation>
+          <xs:documentation>The structure containing  the geoCodeResultList</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GeoCodeResultInfoType">
+    <xs:sequence>
+      <xs:element name="city" type="tns:CityNameType">
+        <xs:annotation>
+          <xs:documentation>City Name holds the textual string identifying a City.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="county" type="tns:CountyNameType">
+        <xs:annotation>
+          <xs:documentation>String value containing the name of the County.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="geoCode" type="tns:GeographicBoundaryIdentifierType">
+        <xs:annotation>
+          <xs:documentation>String value containing the Geocode</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="state" type="tns:StateNameType">
+        <xs:annotation>
+          <xs:documentation>String value containing the name of the State</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="zipCode" type="tns:UspsPostalCodeType">
+        <xs:annotation>
+          <xs:documentation>USPS Postal Code contains the first 5 characters of the nine digits USPS Postal Code.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GeoCodeResultListType">
+    <xs:sequence>
+      <xs:element name="geoCodeResultInfo" type="tns:GeoCodeResultInfoType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>The structure containing  the geoCodeResultInfo</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="QueryGeoCodeInfoType">
+    <xs:sequence>
+      <xs:element name="city" type="tns:CityNameType">
+        <xs:annotation>
+          <xs:documentation>City Name holds the textual string identifying a City.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="county" type="tns:CountyNameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>String value containing the name of the County.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="geoCode" type="tns:GeographicBoundaryIdentifierType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>String value containing the Geocode</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="state" type="tns:StateNameType">
+        <xs:annotation>
+          <xs:documentation>String value containing the name of the State</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="zipCode" type="tns:UspsPostalCodeType">
+        <xs:annotation>
+          <xs:documentation>USPS Postal Code contains the first 5 characters of the nine digits USPS Postal Code.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="zip4Code" type="tns:UspsPostalCodeExtensionType">
+        <xs:annotation>
+          <xs:documentation>USPS Postal Code Extension contains the last 4 characters of the nine digits USPS Postal Code.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <!---->
+  <!--MVM/Shared Simple Types-->
+  <xs:simpleType name="CityNameType">
+    <xs:annotation>
+      <xs:documentation>City Name holds the textual string identifying a City.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="32"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="CountyNameType">
+    <xs:annotation>
+      <xs:documentation>County Name is the appointed name for a land area of local government within a country that may be made up of both cities and towns within its area. Counties are administrative divisions of the state in which their boundaries are drawn. Where they exist, they are the intermediate tier of unitary state government, between the statewide tier and the immediately local government tier.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="32"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="GeographicBoundaryIdentifierType">
+    <xs:annotation>
+      <xs:documentation>Geographic Boundary Identifier uniquely identifies an arbitray geographic area.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="9"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="StateNameType">
+    <xs:annotation>
+      <xs:documentation>State Name is the name of a US State</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="32"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="UspsPostalCodeType">
+    <xs:annotation>
+      <xs:documentation>USPS Postal Code contains the first 5 characters of the nine digit USPS Postal Code.</xs:documentation>
+      <xs:documentation>USPS Postal Code contains the first 5 characters of the nine digit USPS Postal Code.</xs:documentation>
+      <xs:documentation>alias: Ensemble: ADDR_DATA.ADR_ZIP</xs:documentation>
+      <xs:documentation>Ensemble: ADDR_DATA.ADR_ZIP
+
+The first 5 characters or digits of the address zip code.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="5"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="UspsPostalCodeExtensionType">
+    <xs:annotation>
+      <xs:documentation>USPS Posta Code Extension contains the last 4 characters of the nine digit USPS Postal Code.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="4"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <!---->
+</xs:schema>

@@ -1,0 +1,454 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--edited with XMLSpy v2014 rel. 2 (x64) (http://www.altova.com) by Adon Powell (SPRINT)--><!--Main document view.--><xs:schema targetNamespace="http://integration.sprint.com/interfaces/manageFDP/v1/manageFDP.xsd" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.4" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://integration.sprint.com/interfaces/manageFDP/v1/manageFDP.xsd">
+  <!--Date              Author                 Version     Change                                                                                                                                                   Rel                  SR#-->
+  <!--03/27/2014    Cindy Pummill    1.0            Initial revision                                                                                                                                          GBL14.2         PJ009511-->
+  <!--04/14/2014    Adon Powell     1.0            Add Simple Types & Standardize                                                                                                            GBL14.2         PJ009511-->
+  <!--04/14/2014    Cindy Pummill    1.0            updated element names & enumerations, added responsedescription                                                   GBL14.2         PJ009511-->
+  <!--04/15/2014    Adon Powell     1.0            Add Simple Types & Standardize                                                                                                            GBL14.2         PJ009511-->
+  <!--04/23/2014    Cindy Pummill    1.0            removed originalAmount and change creditCardNumber to optional in the request.                              GBL14.2         PJ009511-->
+  <!--05/01/2014    Cindy Pummill    1.1            Added eftInfo structure to request                                                                                                         GBL14.2         PJ009511-->
+  <!--05/02/2014    Adon Powell     1.1            Add/upd Simple Types & Standardize                                                                                                     GBL14.2         PJ009511-->
+  <!--05/16/2014    Cindy Pummill    1.2            Added message to response                                                                                                         GBL14.2         PJ009511-->
+  <!--05/17/2014    Adon Powell     1.2            Add/upd Simple Types & Standardize                                                                                                     GBL14.2         PJ009511-->
+  <!--05/17/2014    Adon Powell     1.2            fixed addresstype pattern                                                                                                     GBL14.2         PJ009511-->
+  <!--06/03/2014    Adon Powell     1.2            fixed bankcode->abaroutingnumber                                                                                                    GBL14.2         PJ009511-->
+  <!--02/12/2015   Cindy Pummill        1.3     Removed eftInfo, addressInfo, nameInfo, creditCardAuthCode, creditCardExpDate, primaryLine, zipCode4, zipCode, securityCode, cardMemberName, customerRefNumber from request.  Removed authConfirmCode, responseCode, responseDescription from response	GBL15.2	PJ012171-->
+  <!--02/17/2015   Adon Powell         1.3     Review/standardize 1.3                                                                        GBL15.2	PJ012171-->
+  <!--03/17/2015   Cindy Pummill        1.4     Removed 'R' from enumeration of ResponseStatusCodeType	GBL15.2	PJ012171-->
+  <!---->
+  <xs:element name="manageFDP" type="tns:ManageFDPRequestType">
+    <xs:annotation>
+      <xs:documentation>FDP - Future Dated Payment</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="manageFDPResponse" type="tns:ManageFDPResponseType"/>
+  <!---->
+  <xs:complexType name="ManageFDPRequestType">
+    <xs:sequence>
+      <xs:element name="accountInfo" type="tns:AccountInfoType">
+        <xs:annotation>
+          <xs:documentation>Account Information</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="manageFDPInfo" type="tns:ManageFDPInfoType">
+        <xs:annotation>
+          <xs:documentation>Manage FDP information</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ManageFDPResponseType">
+    <xs:sequence>
+      <xs:element name="message" type="tns:ConfirmMessageTextType" default="Success">
+        <xs:annotation>
+          <xs:documentation>Returns 'Success' if the transaction completely successfully (no errors.)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="voucherNumber" type="tns:VoucherIdentifierType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Direct debit voucher number</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="responseStatus" type="tns:ResponseStatusCodeType">
+        <xs:annotation>
+          <xs:documentation>Response status
+S=Success
+R=Failure</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AccountInfoType">
+    <xs:choice>
+      <xs:element name="ban" type="tns:BillingAccountNumberType">
+        <xs:annotation>
+          <xs:documentation>Billing Account Number</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="subscriberId" type="tns:SubscriberIdentifierType">
+        <xs:annotation>
+          <xs:documentation>Subscriber identifier</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="mdn" type="tns:MobileDirectoryNumberStringType">
+        <xs:annotation>
+          <xs:documentation>Mobile Directory Number</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ufmi" type="tns:UrbanFleetMemberIdentifierStringType">
+        <xs:annotation>
+          <xs:documentation>Urban Fleet Member Identifier
+(UrbanId*FleetId*MemberId)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="deviceSerialNumber" type="tns:DeviceSerialNumberType">
+        <xs:annotation>
+          <xs:documentation>Device serial number</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ipAddress" type="tns:InternetProtocolAddressStringType">
+        <xs:annotation>
+          <xs:documentation>Internet Protocol Address</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="imsi" type="tns:InternationalMobileSubscriberIdentityStringType">
+        <xs:annotation>
+          <xs:documentation>International Mobile Subscriber Identity</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="nai" type="tns:NetworkAccessIdentifierType">
+        <xs:annotation>
+          <xs:documentation>Network Access Identifier</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="additionalImsi" type="tns:InternationalMobileSubscriberIdentityStringType">
+        <xs:annotation>
+          <xs:documentation>International Mobile Subscriber Identity</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="hppttId" type="tns:HighPerformancePushToTalkIdentifierStringType">
+        <xs:annotation>
+          <xs:documentation>High Performance Push To Talk Identifier</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:choice>
+  </xs:complexType>
+  <xs:complexType name="CancelFDPInfoType">
+    <xs:sequence>
+      <xs:element name="voucherNumber" type="tns:VoucherIdentifierType">
+        <xs:annotation>
+          <xs:documentation>Direct debit voucher number</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ManageFDPInfoType">
+    <xs:choice>
+      <xs:element name="modifyFDPInfo" type="tns:ModifyFDPInfoType">
+        <xs:annotation>
+          <xs:documentation>Modify FDP Information</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="cancelFDPInfo" type="tns:CancelFDPInfoType">
+        <xs:annotation>
+          <xs:documentation>Cancel FDP Information</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:choice>
+  </xs:complexType>
+  <xs:complexType name="ModifyFDPInfoType">
+    <xs:sequence>
+      <xs:element name="voucherNumber" type="tns:VoucherIdentifierType">
+        <xs:annotation>
+          <xs:documentation>Direct debit voucher number</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="paymentInfo" type="tns:PaymentInfoType">
+        <xs:annotation>
+          <xs:documentation>Payment Information</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="NameInformationType">
+    <xs:sequence/>
+  </xs:complexType>
+  <xs:complexType name="PaymentCardInfoType">
+    <xs:sequence>
+      <xs:element name="creditCardNumber" type="tns:PaymentCardNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Credit card number</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PaymentInfoType">
+    <xs:sequence>
+      <xs:element name="allowDuplicateInd" type="tns:AllowDuplicatePaymentIndicatorType">
+        <xs:annotation>
+          <xs:documentation>Allows to post duplicate payments</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="paymentMethod" type="tns:PaymentMethodCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Payment method</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="paymentSubMethod" type="tns:PaymentSubMethodTypeCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Payment submethod</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="paymentAmount" type="tns:PaymentAmountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Payment amount</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="paymentSourceId" type="tns:PaymentSourceIdentifierType">
+        <xs:annotation>
+          <xs:documentation>Source Id</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="paymentSourceType">
+        <xs:annotation>
+          <xs:documentation>Payment Source type
+Valid Values:
+O – Online
+D – Direct Debit
+L – Lock Box
+P – Deposit
+V – View Star
+A - Recurring Direct Debit Checking
+N - Dummy for Partners</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="tns:PaymentSourceTypeCodeType">
+            <xs:enumeration value="O"/>
+            <xs:enumeration value="D"/>
+            <xs:enumeration value="L"/>
+            <xs:enumeration value="P"/>
+            <xs:enumeration value="V"/>
+            <xs:enumeration value="A"/>
+            <xs:enumeration value="N"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="bankAccountNumber" type="tns:BankAccountNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Bank account number</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="bankCode" type="tns:AbaRoutingNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Bank code / ABA Routing Number</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="checkNum" type="tns:CheckNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Check number</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="paymentCardInfo" type="tns:PaymentCardInfoType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Credit card request information</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="paymentDate" type="tns:PaymentDateType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Payment date</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <!---->
+  <!--MVM / Simple Types-->
+  <xs:simpleType name="AbaRoutingNumberType">
+    <xs:annotation>
+      <xs:documentation>American Bankers Association Routing Number is a unique number assigned by the American Bankers Association (ABA) that identifies a specific federal or state chartered bank or savings institution.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="9"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="AllowDuplicatePaymentIndicatorType">
+    <xs:annotation>
+      <xs:documentation>Allow Duplicate Payment Indicator identifies those instances of Payment that must be checked to insure they are not duplicate payments.
+valid values:
+Y = Duplicate Payments allowed, do insure the payment is unique,
+N = Duplicate Payments not allowed, insure the Payment is unque.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:boolean"/>
+  </xs:simpleType>
+  <xs:simpleType name="BankAccountNumberType">
+    <xs:annotation>
+      <xs:documentation>The Bank Account Number is a number that identifies a monetary account with a banking institution recording the balance of money for a customer.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="20"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="BillingAccountNumberType">
+    <xs:annotation>
+      <xs:documentation>Billing Account Number uniquely identifies an instance of Billing Account used to accrue charges for invoicing.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:integer">
+      <xs:totalDigits value="9"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="CheckNumberType">
+    <xs:annotation>
+      <xs:documentation>Check Number uniquely identifies a check within the context of a Checking Account.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="24"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DeviceSerialNumberType">
+    <xs:annotation>
+      <xs:documentation>Device Serial Number is a unique number that is embedded electronically by the manufacturer into a wireless communication device that identifies that individual unit.</xs:documentation>
+      <xs:documentation>Device Serial Number a unique number that is embedded electronically by the manufacturer into a wireless communication device that identifies that individual unit.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="8"/>
+      <xs:maxLength value="20"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="HighPerformancePushToTalkIdentifierStringType">
+    <xs:annotation>
+      <xs:documentation>High Performance Push To Talk Identifier (HPPTTID) is the identifier of a Subscription utilizing the QChat  Push-To-Talk techniology. HPPTTID is constructed in the username@domain URI format.  The username will be a MDN or UFMI based number.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="40"/>
+      <xs:minLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="InternationalMobileSubscriberIdentityStringType">
+    <xs:annotation>
+      <xs:documentation>International Mobile Subscriber Identity (IMSI) is a unique number associated with all GSM and Universal Mobile Telecommunications System (UMTS) network mobile phone users. It is stored in the Subscriber Identity Module (SIM) inside the phone and is sent by the phone to the network. It is also used to acquire other details of the mobile in the Home Location Register (HLR) or as locally copied in the Visitor Location Register. In order to avoid the subscriber being identified and tracked by eavesdroppers on the radio interface, the IMSI is sent as rarely as possible and a randomly generated TMSI is sent instead.
+
+The IMSI is used in any mobile network that interconnects with other networks, in particular CDMA and EVDO networks as well as GSM nets. This number is provisioned in the phone directly or in the R-UIM card (a CDMA analogue equivalent to a SIM card in GSM)
+
+An IMSI is usually 15 digits long, but can be shorter (for example MTN South Africa's IMSIs are 14 digits). The first 3 digits are the Mobile Country Code (MCC), and is followed by the Mobile Network Code (MNC), either 2 digits (European standard) or 3 digits (North American standard). The remaining digits are the Mobile Subscriber Identification Number (MSIN) within the network's customer base.
+
+The IMSI conforms to the International Telecommunication Union (ITU) E.212 numbering standard.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="16"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="InternetProtocolAddressStringType">
+    <xs:annotation>
+      <xs:documentation>Internet Protocol Address is the numerical address by which a location in the Internet is identified. Computers on the Internet use IP addresses to route traffic and establish connections among themselves.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="15"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="MobileDirectoryNumberStringType">
+    <xs:annotation>
+      <xs:documentation>Mobile Directory Number (MDN) is the actual phone number one would dial to reach a specific mobile phone.
+
+
+
+Prior to Wireless Number Portability, MDN was the same number as the Mobile Identification Number (MIN) for many mobile phones. But now that MDNs can be ported (moved) to other carriers, MDN and MIN will be different for ported numbers.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="10"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="NetworkAccessIdentifierType">
+    <xs:annotation>
+      <xs:documentation>Network Access Identifier holds the concatenation of the a user name and domain.</xs:documentation>
+      <xs:documentation>alias: URI</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="64"/>
+      <xs:pattern value=".+@.+\..+"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="PaymentAmountType">
+    <xs:annotation>
+      <xs:documentation>Payment amount is the amount of an invoice's charges for which payments have been applied.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:decimal">
+      <xs:totalDigits value="9"/>
+      <xs:fractionDigits value="2"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="PaymentCardNumberType">
+    <xs:annotation>
+      <xs:documentation>Payment Card Number is the number issued on the card.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="20"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="PaymentDateType">
+    <xs:annotation>
+      <xs:documentation>Payment Date is the date on which a payment was recieved.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:date"/>
+  </xs:simpleType>
+  <xs:simpleType name="PaymentMethodCodeType">
+    <xs:annotation>
+      <xs:documentation>Payment Method Code represents the unique identifier used to identify a method used to pay for services or products.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="2"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="PaymentSourceIdentifierType">
+    <xs:annotation>
+      <xs:documentation>Payment Source Identifier uniquely identifies the PARTY who submitted or requested the Payment.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="8"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="PaymentSourceTypeCodeType">
+    <xs:annotation>
+      <xs:documentation>Payment Source Type Code identifies the type source from which the payment originated.
+Valid Values Include:
+O – Online,
+D – Direct Debit,
+L – Lock Box,
+P – Deposit,
+V – View Star,
+A - Recurring Direct Debit Checking,
+N - Dummy for Partners...</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="PaymentSubMethodTypeCodeType">
+    <xs:annotation>
+      <xs:documentation>Payment Sub Method Type Code designates a specifc Payment sub method (e.g. VS - visa, AM - amex, MC - master card)</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="2"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ResponseStatusCodeType">
+    <xs:annotation>
+      <xs:documentation>Response Status Code identifies the result of the requested API or operation.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="1"/>
+      <xs:enumeration value="S"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="SubscriberIdentifierType">
+    <xs:annotation>
+      <xs:documentation>Subscriber Identifier is a string that uniquely identifies a subscriber.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="20"/>
+      <xs:minLength value="8"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="UrbanFleetMemberIdentifierStringType">
+    <xs:annotation>
+      <xs:documentation>Urban Fleet Member Identifier String contains the concatenation of the Urban Identifier,'*' Fleet Identifier, '*' and Member IDentifier used to identify the Direct Connect Subscriber in the iDen network.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="23"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="VoucherIdentifierType">
+    <xs:annotation>
+      <xs:documentation>Voucher Identifier is a unique number that identifies a particular instance of a Voucher.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string"/>
+  </xs:simpleType>
+  <xs:simpleType name="ConfirmMessageTextType">
+    <xs:annotation>
+      <xs:documentation>Confrim Msg Text is a string with a confirmation message returned from the called API.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="7"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <!---->
+</xs:schema>

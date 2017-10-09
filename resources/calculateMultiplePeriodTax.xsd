@@ -1,0 +1,511 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--edited with XMLSpy v2007 sp2 (http://www.altova.com) by Sprint Employee (SPRINT)--><xs:schema targetNamespace="http://integration.sprint.com/interfaces/calculateMultiplePeriodTax/v1/calculateMultiplePeriodTax.xsd" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://integration.sprint.com/interfaces/calculateMultiplePeriodTax/v1/calculateMultiplePeriodTax.xsd">
+  <!--Date              Author                      Version    Change                                                                                                 Rel                   SR#-->
+  <!--06/18/2012   Ace Cineus                1.0           Initial Draft                                                                                             MID 12.2          PJ006430-->
+  <!--06/20/2012  Steve Heichelheim     1.0      Added MVM standards and simple types                                                  MID12.2  PJ006430-->
+  <xs:element name="calculateMultiplePeriodTax" type="tns:CalculateSetupTaxRequestType"/>
+  <xs:element name="calculateMultiplePeriodTaxResponse" type="tns:CalculateSetupTaxResponseType"/>
+  <xs:complexType name="CalculateSetupTaxRequestType">
+    <xs:sequence>
+      <xs:element name="chargeItemInfo" type="tns:ChargeItemInfoType">
+        <xs:annotation>
+          <xs:documentation>This structure contains the charge data for the invoice item including: jurisdiction, product, and charge amount information.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CalculateSetupTaxResponseType">
+    <xs:sequence>
+      <xs:element name="calculateMultiplePeriodTaxResultList" type="tns:CalculateSetupTaxResultListType">
+        <xs:annotation>
+          <xs:documentation>This Structure Returns a Tax Wizard TaxDetailData object with the tax detail records contained as a list.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CalculateSetupTaxResultListType">
+    <xs:sequence>
+      <xs:element name="governmentFees" type="tns:GovernmentFeeAmountType">
+        <xs:annotation>
+          <xs:documentation>Contains the total government fees for the charge.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="invoiceTaxRecordsList" type="tns:InvoiceTaxRecordListType">
+        <xs:annotation>
+          <xs:documentation>The structure that contains the list of tax records.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="surcharges" type="tns:SurchargeAmountType">
+        <xs:annotation>
+          <xs:documentation>Contains the total amount of the discretionary surcharges that are assessed on the lined item.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="taxDetailRows" type="tns:RowCountNumberType">
+        <xs:annotation>
+          <xs:documentation>Contains the tax detail row count.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="taxRecordsList" type="tns:TaxRecordListType">
+        <xs:annotation>
+          <xs:documentation>This Structure Contains the list of tax records.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="totalTax" type="tns:TaxAmountType">
+        <xs:annotation>
+          <xs:documentation>Contains total amount of tax that was calculated for the charge.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ChargeItemInfoType">
+    <xs:sequence>
+      <xs:element name="creditCode" type="tns:YesNoIndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Contains the credit code.
+
+Values:
+ Y for a credit and N or empty tag for a charge</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="customerAccountNumber" type="tns:CustomerAccountNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Contains the customer account number.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="customerTypeFlag" type="tns:BusinessOrConsumerCodeType">
+        <xs:annotation>
+          <xs:documentation>Contains the customer type flag. 
+
+Valid values:
+‘B’ for businesses and ‘R’ for residential.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="exemptionClass" type="tns:TaxExemptionClassCodeType">
+        <xs:annotation>
+          <xs:documentation>Contains the exemption classes which contain codes which are defined in the EMS system and are used to determine the tax exemptions.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="geoCode" type="tns:GeographicBoundaryIdentifierType">
+        <xs:annotation>
+          <xs:documentation>Contains the geocode for the transaction.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="invoiceDate" type="tns:InvoiceDateTimeType">
+        <xs:annotation>
+          <xs:documentation>Contains the start date of the period for which the charge should be assessed.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="invoiceNumber" type="tns:InvoiceIdentifierType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Contains the invoice number.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="numberOfMonths" type="tns:NumberOfMonthsForRetrievalType">
+        <xs:annotation>
+          <xs:documentation>Contains the number of months to tax.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="product" type="tns:ProductIdentifierType">
+        <xs:annotation>
+          <xs:documentation>Contains the product which contains information about CommTax or the Quantum tax engine.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="taxableAmount" type="tns:ChargeAmountType">
+        <xs:annotation>
+          <xs:documentation>Contains the Amount.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="transactionCode" type="tns:TransactionCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Contains the transaction code. Leave blank (by default) for standard call. Can Contain A for adjustment, X for exemption from all taxes or D for Detailed Bundle information.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="utilityCode" type="tns:UtilityRegulationTypeCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Contain the utility code.
+
+ Valid values:
+ ‘R’ for Regulated Utility and ‘U’ for Unregulated Utility.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="InvoiceTaxRecordInfoType">
+    <xs:sequence>
+      <xs:element name="surchargeTaxFlag" type="tns:SurchargeTypeCodeType">
+        <xs:annotation>
+          <xs:documentation>Contains the flag for determining if the type is Surcharge or Government Tax. 
+Valid values:
+ ‘G’ for government tax or ‘S’ for surcharge.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="taxAmount" type="tns:TaxAmountType">
+        <xs:annotation>
+          <xs:documentation>The tax amount for the specific record.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="taxAuthority" type="tns:TaxingAuthorityIdentifierType">
+        <xs:annotation>
+          <xs:documentation>This field contains the single digit tax authority.  
+
+Description of each authority:
+0 for federal,1 for state,2 for County,3 for City, 4 for County Incorporated,7 for County District,9 for City District.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="taxInvoiceDescription" type="tns:TaxDescriptionType">
+        <xs:annotation>
+          <xs:documentation>The tax description that appears on the customer invoice.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="taxedGeoCode" type="tns:GeographicBoundaryIdentifierType">
+        <xs:annotation>
+          <xs:documentation>The taxed geocode.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="InvoiceTaxRecordListType">
+    <xs:sequence>
+      <xs:element name="invoiceTaxRecordsInfo" type="tns:InvoiceTaxRecordInfoType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>This object contains the invoice tax information for each tax calculation.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TaxRecordInfoType">
+    <xs:sequence>
+      <xs:element name="linesTaxed">
+        <xs:annotation>
+          <xs:documentation>Contains The number of lines taxed.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="tns:RowCountNumberType">
+            <xs:totalDigits value="10"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="linkedTaxAmount" type="tns:TaxAmountType">
+        <xs:annotation>
+          <xs:documentation>Contains the linked tax amount which refers to tax on tax.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="rateTypeFlag" type="tns:UnitOfMeasureCodeType">
+        <xs:annotation>
+          <xs:documentation>Contains tax rate type flag.  This value is either % or $.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="taxAmount" type="tns:TaxAmountType">
+        <xs:annotation>
+          <xs:documentation>Contains the tax amount for the specific record.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="taxAuthority" type="tns:TaxingAuthorityIdentifierType">
+        <xs:annotation>
+          <xs:documentation>This field contains the single digit tax authority.  
+
+Description of each authority:
+0 for federal,1 for state,2 for County,3 for City, 4 for County Incorporated,7 for County District,9 for City District.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="taxCode" type="tns:TaxTypeCodeType">
+        <xs:annotation>
+          <xs:documentation>Contains the tax code which indicates the general type of tax that is assessed.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="taxDescription" type="tns:TaxDescriptionType">
+        <xs:annotation>
+          <xs:documentation>Contains the description that may be used on an invoice.  This is typically specific for the location, tax authority and tax type.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="taxRate" type="tns:TaxRateType">
+        <xs:annotation>
+          <xs:documentation>Contains the rate or fee that was used to generate the tax amount for the charge.  Depending on the TaxCode, this can be a rate or a dollar amount.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="taxType" type="tns:TaxTypeIdentifierType">
+        <xs:annotation>
+          <xs:documentation>Contains the information about the type of tax.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="taxedGeoCode" type="tns:GeographicBoundaryIdentifierType">
+        <xs:annotation>
+          <xs:documentation>Contains the taxed Geocode.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TaxRecordListType">
+    <xs:sequence>
+      <xs:element name="taxRecordsInfo" type="tns:TaxRecordInfoType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>This Structure contains the detail tax information for each tax calculation</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <!---->
+  <!--MVM/Shared Simple Types-->
+  <xs:simpleType name="BusinessOrConsumerCodeType">
+    <xs:annotation>
+      <xs:documentation>Business Consumer Customer Code identifies the Customer as a Business Customer or a Consumer Customer.
+
+Values:
+B for Business
+R for Consumer</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="1"/>
+      <xs:enumeration value="B"/>
+      <xs:enumeration value="R"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ChargeAmountType">
+    <xs:annotation>
+      <xs:documentation>Charge Amount is the dollar amount charged for goods or services.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:decimal">
+      <xs:totalDigits value="32"/>
+      <xs:fractionDigits value="8"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="CustomerAccountNumberType">
+    <xs:annotation>
+      <xs:documentation>Customer Account Number uniquely identifies an Account that represents ongoing business relationship .</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="30"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="GeographicBoundaryIdentifierType">
+    <xs:annotation>
+      <xs:documentation>Geographic Boundary Identifier uniquely identifies an arbitray geographic area.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="9"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="GovernmentFeeAmountType">
+    <xs:annotation>
+      <xs:documentation>Government Fee Amount is the monetary amount of a fee collected from a customer on behalf of the government.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:decimal">
+      <xs:totalDigits value="32"/>
+      <xs:fractionDigits value="8"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="InvoiceDateTimeType">
+    <xs:annotation>
+      <xs:documentation>Invoice Date Time is the calendar date and time of day on which the invoice is produced.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:dateTime"/>
+  </xs:simpleType>
+  <xs:simpleType name="InvoiceIdentifierType">
+    <xs:annotation>
+      <xs:documentation>Invoice Identifer uniquely identifies an itemized bill of sale.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="10"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="NumberOfMonthsForRetrievalType">
+    <xs:restriction base="xs:int">
+      <xs:totalDigits value="2"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ProductIdentifierType">
+    <xs:annotation>
+      <xs:documentation>Product Identifier is a code that uniquely idenfies and instance or group of items offered for sale to the Customer.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="20"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="RowCountNumberType">
+    <xs:annotation>
+      <xs:documentation>Row Count Number is the total number of rows returned or transmitted.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:int">
+      <xs:totalDigits value="20"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="SurchargeAmountType">
+    <xs:annotation>
+      <xs:documentation>Surcharge Amount is the monetary amount of a surcharge.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:decimal">
+      <xs:totalDigits value="32"/>
+      <xs:fractionDigits value="8"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="SurchargeTypeCodeType">
+    <xs:annotation>
+      <xs:documentation>Surcharge Type Code designates a specific type of surcharge.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="1"/>
+      <xs:enumeration value="G"/>
+      <xs:enumeration value="S"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TaxAmountType">
+    <xs:annotation>
+      <xs:documentation>Tax Amount is the monetary amount charged and collected on behalf of a government entity for taxes.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:decimal">
+      <xs:totalDigits value="32"/>
+      <xs:fractionDigits value="8"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TaxDescriptionType">
+    <xs:annotation>
+      <xs:documentation>Tax Description is the normal language description of the tax.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="100"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TaxExemptionClassCodeType">
+    <xs:annotation>
+      <xs:documentation>Tax Exemption Class Code is a code that denotes if an organization is exempt from certain types of taxes.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="4"/>
+      <xs:minLength value="2"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TaxingAuthorityIdentifierType">
+    <xs:annotation>
+      <xs:documentation>The Taxing Authority Identifier designates which level of taxing authority the tax is collected on behalf of.
+Possible Values:
+0 – federal
+1 – State
+2 – Country
+3 – City
+4 – Secondary country
+5 – Secondary city
+9 – All</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TaxRateType">
+    <xs:annotation>
+      <xs:documentation>The Tax Rate is a rate expressed in decimal format and is applied to a charge to determine the amount of tax to be collected from the customer.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:decimal">
+      <xs:totalDigits value="9"/>
+      <xs:fractionDigits value="8"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TaxTypeCodeType">
+    <xs:annotation>
+      <xs:documentation>Tax Type Code designates the general type of tax that is assessed.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="2"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TaxTypeIdentifierType">
+    <xs:annotation>
+      <xs:documentation>Tax Type Identifier designates a specific type of tax.
+Valid Values Include:
+01 - UTILITY-USERS,
+02 - BQ,
+03 - 911-TAX,
+04 - PUC-04,
+05 - TELEPHONE-SALES,
+06 - STATUTORY-RECEIPTS,
+07 - UTIL-USE-BUSNESS,
+08 - LICENSE,
+09 - SERVICE,
+10 - DISTRICT,
+11 - 911-BUSNESS,
+30 - ALL-TYPES,
+40 - USF-SURCHGE,
+41 - TRS-SURCHGE,
+42 - DEAF-SURCHGE,
+43 - HIGH-COST,
+44 - POISON-CONTROL,
+45 - LIFELINE,
+46 - PICC,
+50 - EXCISE,
+51 - SPECIAL,
+52 - SURCHARGE,
+59 - LICENSE-TAX-2,
+60 - UTIL-USE-BUS-2,
+61 - UTIL-USE-2,
+62 - BQ-2,
+63 - 911-TAX-2,
+64 - GROSS-2,
+65 - USF-SURCHGE-2,
+66 - TRS-SURCHGE-2,
+67 - DEAF-SURCHGE-2,
+68 - HIGH-COST-2,
+
+69 - POISON-CONTROL-2,
+
+70 - FEDERAL,
+
+71 - EUCL,
+90 - ROAM-EXMP,
+99 - SALES.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="2"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TransactionCodeType">
+    <xs:annotation>
+      <xs:documentation>Tansaction Type Code
+
+Valid Transaction Type Code values:
+SDR => SalesOrder
+WDR => WorkOrder
+RMA => RMA
+SCM => ShipConfirm
+WCM => WIPConfirmation
+RRC => RMAReceiptConfirmation
+PDR => PurchaseOrder
+EDF => EDF
+PRC => POReceiptConfirmation
+ADJ => Adjustment
+IMS => ItemMaster
+ISN => InventorySnapshot
+UPD => UpdateOrders</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="UnitOfMeasureCodeType">
+    <xs:annotation>
+      <xs:documentation>Unit Of Measurement Code represents the set of characters that represents a kind of unit (as of length, surface, volume, dry measure, liquid measure, money, weight, time, etc.), used as a standard of comparison for others of the same kind, in assigning to them numerical values, as 1 foot, 1 yard, 1 mile, 1 square foot, 1 square yard, 1 cubic foot, 1 peck, 1 bushel, 1 gallon, 1 cent, 1 ounce, 1 pound, 1 hour, and the like.</xs:documentation>
+      <xs:documentation>Unit Of Measurement Code represents the set of characters that represents a kind of unit (as of length, surface, volume, dry measure, liquid measure, money, weight, time, etc.), used as a standard of comparison for others of the same kind, in assigning to them numerical values, as 1 foot, 1 yard, 1 mile, 1 square foot, 1 square yard, 1 cubic foot, 1 peck, 1 bushel, 1 gallon, 1 cent, 1 ounce, 1 pound, 1 hour, and the like.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="UtilityRegulationTypeCodeType">
+    <xs:annotation>
+      <xs:documentation>Utility Regulation Type Code designates whether the associated utility is regulated.
+Valid Values:
+R - Regulated Utility
+U - Unregulated Utility</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="YesNoIndicatorType">
+    <xs:annotation>
+      <xs:documentation>DEPRECATE (Use Binary Expression) Yes No Indicator binary expression where Y represents the True state and N represents the False state.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <!---->
+</xs:schema>

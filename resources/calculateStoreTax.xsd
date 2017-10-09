@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--edited with XMLSpy v2007 sp2 (http://www.altova.com) by Sprint Employee (SPRINT)--><!--This schema provides the details of the request and resp\onse data for the calculateStoreTax operation in the PaymentManagementService--><xs:schema targetNamespace="http://integration.sprint.com/interfaces/calculateStoreTax/v1/calculateStoreTax.xsd" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://integration.sprint.com/interfaces/calculateStoreTax/v1/calculateStoreTax.xsd">
+  <!--Date              Author                        Change                                                              Rel                SR#-->
+  <!--1/11/2013   Tracy Turner      1.0 Initial version.                                                      	GBL13.2          PJ007935-->
+  <!--1/11/2013  Steve Heichelheim 1.0 Added MVM standards and simple types                      	GBL13.2          PJ007935-->
+  <!--1/14/2013   Tracy Turner      1.0 Added fields to request and response based on JAD, updated some field lengths            	GBL13.2          PJ007935-->
+  <!--3/5/2013   Tracy Turner      1.0 Added optional upgradenow fields to request/response       	GBL13.2          PJ007935-->
+  <!--3/29/2013   Tracy Turner      1.1 changed upgradeNowFeeAmount to be optional as per spec     	GBL13.2          PJ007935-->
+  <xs:element name="calculateStoreTax" type="tns:CalculateStoreTaxRequestType"/>
+  <xs:element name="calculateStoreTaxResponse" type="tns:CalculateStoreTaxResponseType"/>
+  <xs:complexType name="CalculateStoreTaxRequestType">
+    <xs:sequence>
+      <xs:element name="storeId" type="tns:StoreIdentifierType">
+        <xs:annotation>
+          <xs:documentation>Unique identifier for the store</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="itemInfoList" type="tns:ItemListType">
+        <xs:annotation>
+          <xs:documentation>List of structures about the inventory item(s) needing tax information</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CalculateStoreTaxResponseType">
+    <xs:sequence>
+      <xs:element name="itemTaxInfoList" type="tns:ItemTaxListType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>List of structures containing about the inventory item(s) tax information</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="storeErrorInfo" type="tns:StoreErrorInfoType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Structure containing information about the store error</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="itemErrorInfo" type="tns:ItemErrorInfoType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Detailed information about each item that returned an error</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ItemInfoType">
+    <xs:sequence>
+      <xs:element name="lineItem">
+        <xs:annotation>
+          <xs:documentation>Unique line item, cannot be duplicated within the same request</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="tns:LineItemIdentifierType">
+            <xs:minInclusive value="1"/>
+            <xs:maxInclusive value="99"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="itemId" type="tns:StockKeepingUnitType">
+        <xs:annotation>
+          <xs:documentation>Unique ID assigned to models and accessory for inventory (SKU.)  Identifies which models or accessories the offer can be accepted and applied with.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="serializedInd" type="tns:BinaryExpressionType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Indicator to identify whether the product is serialized or Non serialized.  true equals serialized, false equals non-serialized.  If not sent will default to true</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="activeDeviceInd" type="tns:BinaryExpressionType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Indicator to identify whether device is active or not active.  true indicates the device will be active, false indicates not active.  If not sent will default to true</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="priceAmount" type="tns:PriceAmountType">
+        <xs:annotation>
+          <xs:documentation>SKU price of the product. Price before discounts and promotions..</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="purchaseAmount" type="tns:PriceAmountType">
+        <xs:annotation>
+          <xs:documentation>Unit Price of the product to the customer after discounts and promotions..</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="quantity">
+        <xs:annotation>
+          <xs:documentation>Quantity of the product. Value of 1 or more, up to 999.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="tns:OrderLineItemQuantityType">
+            <xs:maxInclusive value="999"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="upgradeNowFeeAmount" type="tns:ChargeAmountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Upgrade now fee amount.  When present the tax for this amount will be calculated similar to an itemId in the same store..</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ItemErrorInfoType">
+    <xs:sequence>
+      <xs:element name="lineItem">
+        <xs:annotation>
+          <xs:documentation>Unique line item, cannot be duplicated within the same request</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="tns:LineItemIdentifierType">
+            <xs:minInclusive value="1"/>
+            <xs:maxInclusive value="99"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="errorCode" type="tns:ErrorMessageIdentifierType">
+        <xs:annotation>
+          <xs:documentation>Error code for the query</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="errorDescription" type="tns:ErrorMessageTextType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Error description.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ItemListType">
+    <xs:sequence>
+      <xs:element name="itemInfo" type="tns:ItemInfoType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Information structure about the inventory item</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ItemTaxInfoType">
+    <xs:sequence>
+      <xs:element name="lineItem">
+        <xs:annotation>
+          <xs:documentation>Unique line item.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="tns:LineItemIdentifierType">
+            <xs:minInclusive value="1"/>
+            <xs:maxInclusive value="99"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="taxAmount" type="tns:TaxAmountType">
+        <xs:annotation>
+          <xs:documentation>Total tax amount for each line item to be paid by the customer..</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="upgradeNowFeeTaxAmount" type="tns:ChargeAmountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Upgrade now fee tax amount.  The additional tax amount related to the upgrade now fee for the item.  Sent in response when upgradeNowFeeAmount is present in request.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ItemTaxListType">
+    <xs:sequence>
+      <xs:element name="itemTaxInfo" type="tns:ItemTaxInfoType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Tax information structure about the inventory item</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="StoreErrorInfoType">
+    <xs:sequence>
+      <xs:element name="storeId" type="tns:StoreIdentifierType">
+        <xs:annotation>
+          <xs:documentation>Unique retail identifier for the store</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="errorCode" type="tns:ErrorMessageIdentifierType">
+        <xs:annotation>
+          <xs:documentation>Error code for the query</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="errorDescription" type="tns:ErrorMessageTextType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Error description.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <!---->
+  <!--MVM/Shared Simple Types-->
+  <xs:simpleType name="BinaryExpressionType">
+    <xs:annotation>
+      <xs:documentation>Binary Expression is a type of an expression with two possible states,"true"and"false".</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:boolean"/>
+  </xs:simpleType>
+  <xs:simpleType name="ChargeAmountType">
+    <xs:annotation>
+      <xs:documentation>Charge Amount is the dollar amount charged for goods or services.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:decimal">
+      <xs:totalDigits value="9"/>
+      <xs:fractionDigits value="2"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ErrorMessageIdentifierType">
+    <xs:annotation>
+      <xs:documentation>Error Message Identifier uniquely identifies a specific error message from the system that encountered the error.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="4"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ErrorMessageTextType">
+    <xs:annotation>
+      <xs:documentation>Error Message Text is a textual description of the error message.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="300"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="LineItemIdentifierType">
+    <xs:annotation>
+      <xs:documentation>Line Item Identifier uniquely identifies a line item of a particular invoice, sale, or bill.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:int"/>
+  </xs:simpleType>
+  <xs:simpleType name="OrderLineItemQuantityType">
+    <xs:annotation>
+      <xs:documentation>Order Line Item Quantity holds the total number of units of the specified Product ID ordered in the ORDER ITEM instance.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:int"/>
+  </xs:simpleType>
+  <xs:simpleType name="PriceAmountType">
+    <xs:annotation>
+      <xs:documentation>Price Amount contains the dollar amount of the price component.  Either Price Amount or Percent will contain a value but not both for a given Price Component Indentifier.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:decimal">
+      <xs:totalDigits value="9"/>
+      <xs:fractionDigits value="2"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="StockKeepingUnitType">
+    <xs:annotation>
+      <xs:documentation>Stock Keeping Unit represents the Sprint Inventory Stock Keeping Unit (SKU).  Stock Keeping Unit identifies a group of PRODUCT instances.  It could identify a handset Model and Model Number, a Kit or an accessory. Previously length = 18.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="15"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="StoreIdentifierType">
+    <xs:annotation>
+      <xs:documentation>Store Identifier identifies the store where the order was placed.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="15"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TaxAmountType">
+    <xs:annotation>
+      <xs:documentation>Tax Amount is the monetary amount charged and collected on behalf of a government entity for taxes.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:decimal">
+      <xs:totalDigits value="9"/>
+      <xs:fractionDigits value="2"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <!---->
+</xs:schema>

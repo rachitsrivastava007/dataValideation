@@ -1,0 +1,690 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--edited with XMLSpy v2013 rel. 2 (http://www.altova.com) by LEE VAN AALSBURG (SPRINT)--><xs:schema targetNamespace="http://integration.sprint.com/interfaces/addPayment/v1/addPayment.xsd" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.6" xmlns:tns="http://integration.sprint.com/interfaces/addPayment/v1/addPayment.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <!--Date              Author                   Change                                                                                                      Rel                  SR#-->
+  <!--03/29/2011   Dweepant Bakshi     Reduced minimum length of creditCardNumber from 16 to 14                  Prod# CS#455502                 PJ4976-->
+  <!--10/19/2011   Tracy Turner		      Removed enumeration for         CS#503694                 GBL11.4 PJ4940-->
+  <!--02/24/2012    Steve Heichelheim   1.2  Added autoEnrollInd element to the paymentInfo Request - unable to apply MVM standards           GBL12.2       PJ004755-->
+  <!--01/17/2014    LaRonna Tisdale      1.3  Added  loanSequenceNumber and paymentAllocationRequestInfoList and substructures to Request and paymentAllocationResponseInfoList and substructures to Response        GBL14.1         PJ9010-->
+  <!--01/21/2014    Adon Powell             1.3  Standardize   1.3 only                                                                                  GBL14.1          PJ009010-->
+  <!--04/21/2014   Steve Heichelheim     1.4     Unable to Standardize.  Added paymentDate and addressInfo to the Request.  Added directDebitVoucherNumber to the response.       GBL14.2         PJ009511-->
+  <!--02/13/2015   Cindy Pummill     1.5     Removed eftInfo, nameInfo, autoEnrollInd, addressInfo, creditCardExpDate, securityCode, cardMemberName, customerRefNumber, primaryLine, zipCode, and zipCode4 from the request. Removed authConfirmCode and responseDescription from the response.  Added responseStatus to the response.       GBL15.2         PJ012171-->
+  <!--01/21/2015    Adon Powell             1.5  Standardize   1.5 only                                                                                  GBL15.2         PJ012171-->
+  <!--03/17/2015    Cindy Pummill             1.6  Remove enumeration 'R' for failure from responseStatus in response      GBL15.2         PJ012171-->
+  <!---->
+  <xs:element name="addPayment" type="tns:AddPayment"/>
+  <xs:element name="addPaymentResponse" type="tns:AddPaymentResponse"/>
+  <!---->
+  <xs:complexType name="AddPayment">
+    <xs:sequence>
+      <xs:element name="billingAccountNumberInformation" type="tns:BillingAccountNumberInformation">
+        <xs:annotation>
+          <xs:documentation>Billing Account Number Information</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="applicationDataInfo" type="tns:ApplicationDataInfo" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Application info</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="paymentInfo" type="tns:PaymentInfo">
+        <xs:annotation>
+          <xs:documentation>Payment information</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AddPaymentResponse">
+    <xs:sequence>
+      <xs:element name="authConfirmInfo" type="tns:AuthConfirmInfo">
+        <xs:annotation>
+          <xs:documentation>The number of the record.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AdditionalActivityInfo">
+    <xs:sequence>
+      <xs:element name="createInteractionInd" type="tns:CreateInteractionInd" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Create Interactcion Indicator will be set to "T" (true) by calling applications that create sView interactions.  All other calling applications can set the field to a "F"alse value, leave it empty or not send it at all.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AddressInfoType">
+    <xs:sequence/>
+  </xs:complexType>
+  <xs:complexType name="ApplicationDataInfo">
+    <xs:sequence>
+      <xs:element name="associateId" type="tns:AssociateIdentifier" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Associate Identifier uniquely identifies a Store Associate in an external application (Radio Shack, RMS+) that is sent to Sprint in the Ensemble Billing system.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="storeId" type="tns:RetailStoreIdentifier" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Retail Store Identifier.
+
+Valid format: seven characters long, all numeric digits except for the third character, which should be a hyphen (NN-NNNN format, for a given numeric value of N).</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AuthConfirmInfo">
+    <xs:sequence>
+      <xs:element name="paymentAllocationResponseInfoList" type="tns:PaymentAllocationResponseListType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>List of Payment Allocation response information</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="voucherNumber" type="tns:VoucherIdentifierType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The direct debit voucher number assigned to the payment record. 
+
+Returned for current date and future dated payments that were successfully created.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="responseStatus">
+        <xs:annotation>
+          <xs:documentation>Response Status S=Success</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="tns:ResponseStatusCodeType">
+            <xs:enumeration value="S"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="BillingAccountNumberInformation">
+    <xs:choice>
+      <xs:element name="billingAccountNumber" type="tns:BillingAccountNbrEns">
+        <xs:annotation>
+          <xs:documentation>Billing Account Number uniquely identifies an instance of Billing Account used to accrue charges for invoicing.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="subscriptionId" type="tns:SubscriptionIdentifierEns">
+        <xs:annotation>
+          <xs:documentation>Subscription Identifier Ensemble uniquely identifies an instance of SUBSCRIPTION in the Ensemble system.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="mobileDirectoryNumber" type="tns:MobileDirectoryNumberString">
+        <xs:annotation>
+          <xs:documentation>The method of identifying telephone trunks in the public network of North America, called World Numbering Zone 1 by the ITU-T. the Plan has 3 ways of identifying phone numbers in North America -- a 3-digit area code, a 3-digit exchange or central office code, and 4-digit subscriber code.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="urbanFleetMemberId" type="tns:UrbanFleetMemberIdentifierString">
+        <xs:annotation>
+          <xs:documentation>Urban Fleet Member Identifier String contains the concatenation of the Urban Identifier,'*' Fleet Identifier, '*' and Member IDentifier used to identify the Direct Connect Subscriber in the iDen network</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="deviceSerialNumber" type="tns:SubscriberDeviceSerialNumber">
+        <xs:annotation>
+          <xs:documentation>Subscriber Device Serial Number is the Equipment Id – IMEI or Simcard Id or MSN or ESN of any subscriber under the BAN.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="internetProtocolAddressString" type="tns:InternetProtocolAddressString">
+        <xs:annotation>
+          <xs:documentation>Electronic Address represents the character string of the electronic address.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="internationalMobileSubscriberIdentityString" type="tns:InternationalMobileSubscriberIdentityString">
+        <xs:annotation>
+          <xs:documentation>International Mobile Subscriber Identity (IMSI) holds a unique identifier allocated to each mobile subscriber in a GSM and UMTS network. It consists of a MCC (Mobile Country Code), a MNC (Mobile Network Code) and a MSIN (Mobile Station Identification Number).</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="networkAccessIdentifierString" type="tns:NetworkAccessIdentifierString">
+        <xs:annotation>
+          <xs:documentation>Network Access Identifier holds the concatenation of the a user name and realm.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="additionalImsi" type="tns:InternationalMobileSubscriberIdentityString">
+        <xs:annotation>
+          <xs:documentation>International Mobile Subscriber Identity (IMSI) holds a unique identifier allocated to each mobile subscriber in a GSM and UMTS network. It consists of a MCC (Mobile Country Code), a MNC (Mobile Network Code) and a MSIN (Mobile Station Identification Number).</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="highPerformancePushToTalkIdString" type="tns:HighPerformancePushToTalkIDString">
+        <xs:annotation>
+          <xs:documentation>High Performance Push To Talk Identifier (HPPTTID) is the identifier of a Subscription utilizing the QChat  Push-To-Talk techniology. HPPTTID is constructed in the username@domain URI format.  The username will be a MDN or UFMI based number.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:choice>
+  </xs:complexType>
+  <xs:complexType name="CreditCardReqInfo">
+    <xs:sequence>
+      <xs:element name="creditCardNumber" type="tns:PaymentCardNumber">
+        <xs:annotation>
+          <xs:documentation>Payment Card Number is the number issued on the card.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="EftInfo">
+    <xs:sequence/>
+  </xs:complexType>
+  <xs:complexType name="NameInfo">
+    <xs:sequence/>
+  </xs:complexType>
+  <xs:complexType name="PaymentAllocationRequestInfoType">
+    <xs:sequence>
+      <xs:element name="entitiySequenceNumber">
+        <xs:annotation>
+          <xs:documentation>The Entity Sequence number of the loan. Will be set as 0 for sServices payment allocation and greater than 0 for Loans</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="tns:SequenceNumberType">
+            <xs:totalDigits value="9"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="allocationType" type="tns:PaymentAllocationTypeCodeType">
+        <xs:annotation>
+          <xs:documentation>Payment allocation type.
+L – Loan
+S –- Services</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="amount">
+        <xs:annotation>
+          <xs:documentation>Payment amount allocated.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="tns:PaymentAmountType">
+            <xs:totalDigits value="9"/>
+            <xs:fractionDigits value="2"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PaymentAllocationRequestListType">
+    <xs:sequence>
+      <xs:element name="PaymentAllocationRequestInfo" type="tns:PaymentAllocationRequestInfoType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>contains all input available to perform Payment allocation</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PaymentAllocationResponseInfoType">
+    <xs:sequence>
+      <xs:element name="loanNumber" type="tns:LoanIdentifierType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Loan number, will be set as 0 for sServices payment portion allocation and greater than 0 for lLoans.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="amount" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Payment amount allocated for the lLoan or sServices</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="tns:PaymentAmountType">
+            <xs:totalDigits value="9"/>
+            <xs:fractionDigits value="2"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PaymentAllocationResponseListType">
+    <xs:sequence>
+      <xs:element name="PaymentAllocationResponseInfo" type="tns:PaymentAllocationResponseInfoType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Contains output related to the Loan allocation.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PaymentInfo">
+    <xs:sequence>
+      <xs:element name="allowDuplicateInd" type="tns:AllowDuplicatePaymentIndicator">
+        <xs:annotation>
+          <xs:documentation>Allow Duplicate Payment Indicator identifies those instances of Payment that must be checked to insure they are not duplicate payments.
+
+Y => Duplicate Payments allowed, do insure the payment is unique.
+N => Duplicate Payments not allowed, insure the Payment is unque.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="paymentMethod" type="tns:PaymentMethodCode">
+        <xs:annotation>
+          <xs:documentation>Payment Method Code represents the unique identifier used to identify a method used to pay for services or products. Current valid values are:
+
+CC - Credit Card
+CP - Check over the phone
+SP - Saving over the phone
+MO - Money Order
+CK - Check
+CD - Cash on Delivery
+DB - Debit Card
+CA - Cash
+CT – Card Present Transaction</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="paymentSubMethod" type="tns:PaymentCardTypeCode" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Payment Card Type Code identifies the Credit/Debit Card provider.
+
+Examples:
+Visa
+MasterCard
+American Express</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="paymentAmount" type="tns:PaymentAmount">
+        <xs:annotation>
+          <xs:documentation>Payment amount is the amount of an invoice's charges for which payments have been applied</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="sourceId" type="tns:PaymentSourceIdentifier">
+        <xs:annotation>
+          <xs:documentation>Payment Source Identifier uniquely identifies the PARTY who submitted the Payment.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="sourceType" type="tns:PaymentSourceTypeCode">
+        <xs:annotation>
+          <xs:documentation>Payment Source Type Code identifies the type of PARTY that submitted the Payment.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="actionCode" type="tns:PaymentActionCode" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Action Code uniquely identifies a specific deed, action or function.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="bankAccountNumber" type="tns:BankAccountNumber" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Bank Account Number uniquely identifies a Checking or Savings Account in a Financial isntitution identified by the American Bankers Association Routing Number.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="bankCode" type="tns:AbaRoutingNumber" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>American Bankers Association Routing Number primary purposes are:
+
+(a) to identify the bank which is responsible to either pay or give credit or is
+entitled to receive payment or credit for a financial transaction, and
+
+(b) to provide a reference to a designated presentment point of the bank at
+which the transaction can be delivered or presented.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="checkNum" type="tns:CheckNumber" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Check Number uniquely identifies a check within the context of a Checking Account</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="creditCardReqInfo" type="tns:CreditCardReqInfo" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Structure
+Mandatory only for CC, DB payments</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="additionalActivityInfo" type="tns:AdditionalActivityInfo" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Structure that provides info regarding additional activities</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="loanSequenceNumber" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Loan sequence number to be paid off.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="tns:SequenceNumberType">
+            <xs:totalDigits value="9"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="paymentAllocationRequestInfoList" type="tns:PaymentAllocationRequestListType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>List of Payment Allocation information</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="paymentDate" type="tns:PaymentDateType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Date for the payment to be processed.  Default: Current Date
+Format ‘MMDDYYYY’</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <!---->
+  <!--MVM/Shared Simple Types-->
+  <xs:simpleType name="BinaryExpressionType">
+    <xs:annotation>
+      <xs:documentation>Binary Expression is a type of an expression with two possible states,"true"and"false".</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:boolean"/>
+  </xs:simpleType>
+  <xs:simpleType name="LoanIdentifierType">
+    <xs:annotation>
+      <xs:documentation>Loan Identifier uniquely identifies a loan and is assigned by the originator of the loan.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="20"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="PaymentAllocationTypeCodeType">
+    <xs:annotation>
+      <xs:documentation>Payment Allocation Type indicates how the payment is to be allocated or applied.
+valid values:
+L - Loan
+S - Services</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="PaymentDateType">
+    <xs:annotation>
+      <xs:documentation>Payment Date is the date on which a payment was recieved.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:date"/>
+  </xs:simpleType>
+  <xs:simpleType name="SequenceNumberType">
+    <xs:annotation>
+      <xs:documentation>Sequence Number is a unique positive integer assigned to an item in a list of items.  It is used to determine order in a list of items or to identify a specific item.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:integer"/>
+  </xs:simpleType>
+  <xs:simpleType name="VoucherIdentifierType">
+    <xs:annotation>
+      <xs:documentation>Voucher Identifier is a unique number that identifies a particular instance of a Voucher.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="11"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <!---->
+  <!--Legacy Simple Types - Not Standardized-->
+  <xs:simpleType name="AbaRoutingNumber">
+    <xs:annotation>
+      <xs:documentation>American Bankers Association Routing Number primary purposes are:
+
+(a) to identify the bank which is responsible to either pay or give credit or is
+entitled to receive payment or credit for a financial transaction, and
+
+(b) to provide a reference to a designated presentment point of the bank at
+which the transaction can be delivered or presented.
+
+The Routing Number is intended primarily to serve the needs of sending or collecting
+institutions by providing the capability for transactions to be transmitted and delivered for settlement in an efficient and timely manner with minimal processing and float costs to sending or collecting banks and payment system participants in general. In certain cases, special classes of routing numbers have been defined to facilitate either the presentment or processing of certain payment transactions.
+
+Receiving or paying banks may use the routing number to enhance the efficiency of their payment processing operations or services provided to their customers so long as these enhancements do not significantly increase check collection costs or delay collection of a significant number of items or dollars.
+
+The routing number serves a secondary purpose for most items/transactions by
+identifying the Federal Reserve office serving the presentment point of the bank.
+Therefore, the selection of the routing number to be assigned will be based on the location of the presentment point within a Federal Reserve district, territory or availability zone.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="9"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="AccountNumberInt">
+    <xs:restriction base="xs:int"/>
+  </xs:simpleType>
+  <xs:simpleType name="AccountNumberString">
+    <xs:annotation>
+      <xs:documentation>Account Number uniquely identifies an Account.  The Account may be a Financial Account, a Customer Account, Billing Account, etc.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="30"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="AllowDuplicatePaymentIndicator">
+    <xs:annotation>
+      <xs:documentation>Allow Duplicate Payment Indicator identifies those instances of Payment that must be checked to insure they are not duplicate payments.
+
+Y => Duplicate Payments allowed, do insure the payment is unique.
+N => Duplicate Payments not allowed, insure the Payment is unque.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:boolean"/>
+  </xs:simpleType>
+  <xs:simpleType name="AssociateIdentifier">
+    <xs:annotation>
+      <xs:documentation>Associate Identifier uniquely identifies a Store Associate in an external application (Radio Shack, RMS+) that is sent to Sprint in the Ensemble Billing system.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="tns:IdentifierString">
+      <xs:maxLength value="30"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="BankAccountNumber">
+    <xs:annotation>
+      <xs:documentation>Bank Account Number uniquely identifies a Checking or Savings Account in a Financial isntitution identified by the American Bankers Association Routing Number.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="tns:IdentifierString">
+      <xs:maxLength value="20"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="BillingAccountNbrEns">
+    <xs:annotation>
+      <xs:documentation>Billing Account Number uniquely identifies an instance of Billing Account used to accrue charges for invoicing.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="tns:AccountNumberInt"/>
+  </xs:simpleType>
+  <xs:simpleType name="CheckNumber">
+    <xs:annotation>
+      <xs:documentation>Check Number uniquely identifies a check within the context of a Checking Account.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="24"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="CreateInteractionInd">
+    <xs:annotation>
+      <xs:documentation>Create Interactcion Indicator will be set to "T" (true) by calling applications that create sView interactions.  All other calling applications can set the field to a "F"alse value, leave it empty or not send it at all.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:boolean"/>
+  </xs:simpleType>
+  <xs:simpleType name="DeviceSerialNbr">
+    <xs:annotation>
+      <xs:documentation>Device Serial Number a unique number that is embedded electronically by the manufacturer into a wireless communication device that identifies that individual unit.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="8"/>
+      <xs:maxLength value="20"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ElectronicAddressString">
+    <xs:annotation>
+      <xs:documentation>ElectronicAddressString represents the character string of the electronic address.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="15"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="EquipmentItemIdentifier">
+    <xs:annotation>
+      <xs:documentation>Equipment Item Identiifer is the item identifier of the equipment to be ordered should be authorized according to the dealer’s sales channel.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="tns:IdentifierString"/>
+  </xs:simpleType>
+  <xs:simpleType name="ExternalRetailStoreId">
+    <xs:annotation>
+      <xs:documentation>External Retail Store Identifier  holds the Facility Identifer that uniquely identifies a store of an external Customer such as Wal Mart or Best Buy.  May be printed on the label when shiping to a Distribution Center.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="tns:FacilityId"/>
+  </xs:simpleType>
+  <xs:simpleType name="FacilityId">
+    <xs:annotation>
+      <xs:documentation>Facility Identifier uniquely identifies an instaqnce of FACILITY.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="tns:IdentifierString"/>
+  </xs:simpleType>
+  <xs:simpleType name="HighPerformancePushToTalkIDString">
+    <xs:annotation>
+      <xs:documentation>High Performance Push To Talk Identifier (HPPTTID) is the identifier of a Subscription utilizing the QChat  Push-To-Talk techniology. HPPTTID is constructed in the username@domain URI format.  The username will be a MDN or UFMI based number.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="tns:UniformResourceIdentifierString">
+      <xs:maxLength value="40"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="IdentifierString">
+    <xs:annotation>
+      <xs:documentation>Identifier String  holds a String value that uniquely identifies an instance of an object.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string"/>
+  </xs:simpleType>
+  <xs:simpleType name="InternationalMobileSubscriberIdentityString">
+    <xs:annotation>
+      <xs:documentation>International Mobile Subscriber Identity (IMSI) holds a unique identifier allocated to each mobile subscriber in a GSM and UMTS network. It consists of a MCC (Mobile Country Code), a MNC (Mobile Network Code) and a MSIN (Mobile Station Identification Number).</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="16"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="InternetProtocolAddressString">
+    <xs:annotation>
+      <xs:documentation>Electronic Address represents the character string of the electronic address.</xs:documentation>
+      <xs:documentation>An Internet Protocol Address is the numerical address by which a location in the Internet is identified. Computers on the Internet use IP addresses to route traffic and establish connections among themselves.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="tns:ElectronicAddressString"/>
+  </xs:simpleType>
+  <xs:simpleType name="MobileDirectoryNumberString">
+    <xs:annotation>
+      <xs:documentation>The method of identifying telephone trunks in the public network of North America, called World Numbering Zone 1 by the ITU-T. the Plan has 3 ways of identifying phone numbers in North America -- a 3-digit area code, a 3-digit exchange or central office code, and 4-digit subscriber code.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="10"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="NetworkAccessIdentifierString">
+    <xs:annotation>
+      <xs:documentation>Network Access Identifier holds the concatenation of the a user name and realm.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="64"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="NPANumber">
+    <xs:annotation>
+      <xs:documentation>Numbering Plan Area (NPA) Number is one of the geographical divisions of the United States, Canada, Bermuda, the Caribbean, Northwestern Mexico, Alaska, Hawaii, within which no two telephones will have the same seven-digit telephone number. (An NPA is represented by an Area Code.)</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="3"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="NXXNumber">
+    <xs:restriction base="xs:string">
+      <xs:length value="3"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="PaymentActionCode">
+    <xs:annotation>
+      <xs:documentation>Action Code uniquely identifies a specific deed, action or function.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="3"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="PaymentAmount">
+    <xs:annotation>
+      <xs:documentation>Payment amount is the amount of an invoice's charges for which payments have been applied.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:double"/>
+  </xs:simpleType>
+  <xs:simpleType name="PaymentAmountType">
+    <xs:annotation>
+      <xs:documentation>Payment amount is the amount of an invoice's charges for which payments have been applied.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:decimal"/>
+  </xs:simpleType>
+  <xs:simpleType name="PaymentCardNumber">
+    <xs:annotation>
+      <xs:documentation>Payment Card Number is the number issued on the card.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="14"/>
+      <xs:maxLength value="20"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="PaymentCardTypeCode">
+    <xs:annotation>
+      <xs:documentation>Payment Card Type Code identifies the Credit/Debit Card provider.
+
+Examples:
+Visa
+MasterCard
+American Express</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="2"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="PaymentMethodCode">
+    <xs:annotation>
+      <xs:documentation>Payment Method Code represents the unique identifier used to identify a method used to pay for services or products. Current values include:
+
+CC - Credit Card
+CP - Check over the phone
+SP - Saving over the phone
+MO - Money Order
+CK - Check
+CD - Cash on Delivery
+DB - Debit Card
+CA - Cash
+CT – Card Present Transaction</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="2"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="PaymentSourceIdentifier">
+    <xs:annotation>
+      <xs:documentation>Payment Source Identifier uniquely identifies the PARTY who submitted the Payment.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="8"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="PaymentSourceTypeCode">
+    <xs:annotation>
+      <xs:documentation>Payment Source Type Code identifies the type of PARTY that submitted the Payment.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="RetailStoreIdentifier">
+    <xs:annotation>
+      <xs:documentation>Retail Store Identifier.
+
+Valid format: seven characters long, all numeric digits except for the third character, which should be a hyphen (NN-NNNN format, for a given numeric value of N).</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="tns:ExternalRetailStoreId">
+      <xs:maxLength value="7"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="SubscriberDeviceSerialNumber">
+    <xs:annotation>
+      <xs:documentation>Subscriber Device Serial Number is the Equipment Id – IMEI or Simcard Id or MSN or ESN of any subscriber under the BAN.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="tns:DeviceSerialNbr"/>
+  </xs:simpleType>
+  <xs:simpleType name="SubscriptionIdentifier">
+    <xs:restriction base="tns:IdentifierString"/>
+  </xs:simpleType>
+  <xs:simpleType name="SubscriptionIdentifierEns">
+    <xs:annotation>
+      <xs:documentation>Subscription Identifier Ensemble uniquely identifies an instance of SUBSCRIPTION in the Ensemble system.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="tns:SubscriptionIdentifier"/>
+  </xs:simpleType>
+  <xs:simpleType name="UniformResourceIdentifierString">
+    <xs:restriction base="xs:string"/>
+  </xs:simpleType>
+  <xs:simpleType name="UrbanFleetMemberIdentifierString">
+    <xs:annotation>
+      <xs:documentation>Urban Fleet Member Identifier String contains the concatenation of the Urban Identifier,'*' Fleet Identifier, '*' and Member IDentifier used to identify the Direct Connect Subscriber in the iDen network.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="tns:IdentifierString">
+      <xs:maxLength value="21"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ResponseStatusCodeType">
+    <xs:annotation>
+      <xs:documentation>Response Status Code identifies the result of the requested API or operation.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <!---->
+</xs:schema>

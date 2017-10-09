@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--edited with XMLSpy v2008 (http://www.altova.com) by Sprint (SPRINT PCS)--><xs:schema targetNamespace="http://integration.sprint.com/interfaces/accountBalanceCharge/v1/accountBalanceCharge.xsd" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" xmlns:tns="http://integration.sprint.com/interfaces/accountBalanceCharge/v1/accountBalanceCharge.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <!--Date                 Author                      Version     Change                                                                                        Rel                          SR#-->
+  <!--07/20/2012     Jocelen Silva             1.0             Initial Draft                                                                                   GBL12.3                PJ007262-->
+  <!--07/23/2012   Steve Heichelheim     1.0         Added MVM standards and simple types                    GBL12.3                PJ007262-->
+  <xs:element name="accountBalanceCharge" type="tns:AccountBalanceChargeRequestType"/>
+  <xs:element name="accountBalanceChargeResponse" type="tns:AccountBalanceChargeResponseType"/>
+  <xs:complexType name="AccountBalanceChargeRequestType">
+    <xs:sequence>
+      <xs:element name="mdn" type="tns:MobileDirectoryNumberStringType">
+        <xs:annotation>
+          <xs:documentation>Customer phone number</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="amount" type="tns:ChargeAmountType">
+        <xs:annotation>
+          <xs:documentation>Charge Amount</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AccountBalanceChargeResponseType">
+    <xs:sequence>
+      <xs:element name="responseCode" type="tns:ExceptionConditionCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Charge response code
+Possible values:
+0 – Success
+5 – Failed ,  insufficient balance</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="amount" type="tns:ChargeAmountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The reserved amount – fee value</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="balanceAmount" type="tns:BalanceAmountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The updated balance value including amount was charged for current event).</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <!---->
+  <!--MVM/Shared Simple types-->
+  <xs:simpleType name="BalanceAmountType">
+    <xs:annotation>
+      <xs:documentation>Balance Amount is a the dollar value associated to an account at a point in time.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:decimal">
+      <xs:totalDigits value="10"/>
+      <xs:fractionDigits value="2"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="BillingAccountPartyRoleIdentifierType">
+    <xs:annotation>
+      <xs:documentation>Billing Account Party Role Identifier identifies the instance of the Role the PARTY plays within the context of the specified BILLING ACCOUNT.
+
+Possible values:
+"ACCOUNT HOLDER"
+"EXTERNAL ACCOUNT ADMINISTRATOR"
+"AFFILIATE"
+"SPRINT ACCOUNT ADMINISTRATOR"
+"CM ACCOUNT ADMINISTRATOR"
+"CSM ACCOUNT ADMINISTRATOR"
+"SALES CHANNEL"
+"CUSTOMER CARE REPRESENTATIVE"
+etc.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ChargeActivityCodeType">
+    <xs:annotation>
+      <xs:documentation>Charge Activity Code designates an activity associated to a charge.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="10"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ChargeAmountType">
+    <xs:annotation>
+      <xs:documentation>Charge Amount is the dollar amount charged for goods or services.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:decimal">
+      <xs:totalDigits value="10"/>
+      <xs:fractionDigits value="2"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ExceptionConditionCodeType">
+    <xs:annotation>
+      <xs:documentation>Exception Condition Code is the provider’s declaration of its success or failure in processing the submitted request.
+Example Values:
+0 - Successful completion, 
+4 - Successful completion, but with a warning as to some unusual circumstance, 
+8 - Error, request was not processed successfully, 
+12 - Severe error, represents a failure that could indicate a major system irregularity</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="MobileDirectoryNumberStringType">
+    <xs:annotation>
+      <xs:documentation>Mobile Directory Number (MDN) is the actual phone number one would dial to reach a specific mobile phone.
+
+
+
+Prior to Wireless Number Portability, MDN was the same number as the Mobile Identification Number (MIN) for many mobile phones. But now that MDNs can be ported (moved) to other carriers, MDN and MIN will be different for ported numbers.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="10"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ServiceTypeCodeType">
+    <xs:annotation>
+      <xs:documentation>Service Type Code indicates the type of service being offered. 
+Example Values are:
+C - Cellular 
+D - Dispatch Private
+G - Dispatch Group, 
+S - SMS, 
+P - Packet Data, 
+M - M2M, 
+T - Toll</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <!---->
+</xs:schema>
